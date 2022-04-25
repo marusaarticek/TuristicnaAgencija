@@ -48,14 +48,10 @@ public class Pocitinice {
 		
 		podatki += "*****   Mozne pocitnice   *****\r\n";
 		podatki += "---------------------------------\r\n";
-		podatki += "Avtor: " + this.avtor + "\r\n";
-		podatki += "Naslov: " + this.naslov + "\r\n";
-		podatki += "Leto izdaje: " + this.letoIzdaje + "\r\n";
-		podatki += "Stevilo izvodov: " + this.steviloIzvodov + "\r\n";
-		podatki += "Maksimalno izvodov: " + this.maxIzvodov + "\r\n";
-		podatki += "\r\n";
+		podatki += "Drzava: " + this.drzava + "\r\n";
+		podatki += "Cenovni okvir: " + this.cena + "\r\n";
 		
-		for(Status s : this.seznamStatusov) {
+		for(Termin t : this.seznamTerminov) {
 			podatki += s.toString();
 			podatki += "\r\n";
 		}

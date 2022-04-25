@@ -15,12 +15,15 @@ public class UporabnikVmesnik {
 		
 		while(true) {
 			
-			System.out.println("Pritisni (g) za izbor pocitnic glede na datum.");
-			System.out.println("Pritisni (k) iskanje pocitnic glede na drzavo");
-			System.out.println("Pritisni (r) iskanje pocitnic glede na cenovni okvir.");
-			System.out.println("Pritisni (i) iskanje pocitnic glede na tip.");
-			System.out.println("Pritisni (l) za izpis vseh svojih rezervacij.");
-			System.out.println("Pritisni (p) za novo rezervacijo.");
+			System.out.println("Pritisni (r) za registracijo novega uporabnika.");
+			System.out.println("Pritisni (s) za prijavo v sistem");
+			
+			System.out.println("Pritisni (a) za izbor pocitnic glede na datum.");
+			System.out.println("Pritisni (b) iskanje pocitnic glede na drzavo");
+			System.out.println("Pritisni (c) iskanje pocitnic glede na cenovni okvir.");
+			System.out.println("Pritisni (d) iskanje pocitnic glede na tip.");
+			System.out.println("Pritisni (e) za izpis vseh svojih rezervacij.");
+			System.out.println("Pritisni (f) za novo rezervacijo.");
 			System.out.println("Pritisni (q) za prekinitev programa.");
 			System.out.println();
 			
@@ -28,9 +31,9 @@ public class UporabnikVmesnik {
 			String imeDat = "";
 			
 			switch(izbira) {
-				case 'g':
-					Gradivo g = Gradivo.ustvariGradivo();
-					knjiznica.dodajGradivo(g);
+				case 'r':
+					Uporabnik u = Uporabnik.ustvariUporabnika();
+					agencija.dodajUporabnika(u);
 					break;
 				case 'k':
 					Knjiga k = Knjiga.ustvariKnjigo();
