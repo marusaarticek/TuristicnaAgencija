@@ -24,6 +24,34 @@ public class Termin {
 		this.prihod = prihod;
 	}
 	
+	public Localdate getOdhod() {
+		return this.odhod;
+	}
+	public Localdate getPrihod() {
+		return this.prihod;
+	}
+	
+	
+	@Override
+    public String toString() {
+		String podatki = "";
+		
+		podatki += "***   Podatki o terminu   ***\r\n";
+		podatki += "Datum odhoda: " + this.odhod + "\r\n";
+		podatki += "Datum prihoda: " + this.prihod + "\r\n";
+		
+		return podatki;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//------------------------------------------
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
 
 

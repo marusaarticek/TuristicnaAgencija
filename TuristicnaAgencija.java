@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 public class TuristicnaAgencija {
@@ -67,62 +68,23 @@ public class TuristicnaAgencija {
 	
 	public String izpisPoTerminu() throws Exception {
 		
-		int danOdhoda = 0;
-		while(true) {
-			try {
-				System.out.println("Vnesi dan odhoda(npr. 3): ");
-				dan = Integer.parseInt(br.readLine().trim());
-				System.out.println();
-				break;
-			}
-			catch (Exception e) {
-				System.out.println("Napacen format vnosa!");
-				System.out.println();
-			}
-		}
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
 		
-		int mesecOdhoda = 0;
-		while(true) {
-			try {
-				System.out.println("Vnesi mesec odhoda(npr. 10): ");
-				mesecOdhoda = Integer.parseInt(br.readLine().trim());
-				System.out.println();
-				break;
-			}
-			catch (Exception e) {
-				System.out.println("Napacen format vnosa!");
-				System.out.println();
-			}
-		}
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+		String preberiOdhod = "";
+		String preberiPrihod = "";
 		
-		int danPrihoda = 0;
-		while(true) {
-			try {
-				System.out.println("Vnesi dan prihoda(npr. 5): ");
-				danPrihoda = Integer.parseInt(br.readLine().trim());
-				System.out.println();
-				break;
-			}
-			catch (Exception e) {
-				System.out.println("Napacen format vnosa!");
-				System.out.println();
-			}
-		}
+		System.out.println("***   Iskanje glede na termin pocitnic   ***");
+		System.out.println();
+		System.out.println("Termin odhoda (npr: 2023-02-01):  ");
+		String preberiOdhod = br.readLine().trim();
+		LocalDate odhod = LocalDate.parse(preberiOdhod, dtf);
 		
-		int mesecPrihoda = 0;
-		while(true) {
-			try {
-				System.out.println("Vnesi mesec odhoda(npr. 10): ");
-				danOdhoda = Integer.parseInt(br.readLine().trim());
-				System.out.println();
-				break;
-			}
-			catch (Exception e) {
-				System.out.println("Napacen format vnosa!");
-				System.out.println();
-			}
-		}
-		
+		System.out.println();
+		System.out.println("Termin prihoda (npr: 2023-02-05):  ");
+		String preberiPrihod = br.readLine().trim();
+		LocalDate prihod = LocalDate.parse(preberiPrihod, dtf);
 		
 		String podatki = "";
 		
@@ -130,23 +92,18 @@ public class TuristicnaAgencija {
 		
 		for(Pocitnice pocitnice : this.seznamPocitnic) {
 			for(Termin termin : pocitnice.seznamTerminov) {
-				if(termin.getmesecOdhoda() == mesecOdhoda && termin.getmesecPrihoda() == mesecPrihoda) {
-					if(termin.getdanOdhoda() >= danOdhoda && termin.getdanPrihoda() <= danPrihoda ) {
-						podatki += pocitnice.toString();
-						podatki += "\r\n";
-					}
-				}
-				else if(termin.getmesecOdhoda() == mesecOdhoda && termin.getmese) {
-					
+				if(termin.getOdhod().isEqual(odhod) && termin.getPrihod().isEqual(prihod))  {
+					podatki += pocitnice.toString();
+					podatki += "\r\n";
 				}
 			}	
 		}
 		
 		if(podatki.equals("")) {
-			return "V izbranem letu ni bilo izdanih gradiv!\r\n";
+			return "V izbranem terminu ni moznih pocitnic!\r\n";
 		}
 		
-		return podatki;
+		return podatki;	
 	}
 	
 	
