@@ -67,8 +67,6 @@ public class TuristicnaAgencija {
 	
 	public String izpisPoTerminu() throws Exception {
 		
-		
-		
 		int danOdhoda = 0;
 		while(true) {
 			try {
@@ -150,11 +148,6 @@ public class TuristicnaAgencija {
 		
 		return podatki;
 	}
-	
-	
-	
-	
-	
 	
 	
 	@Override
@@ -286,21 +279,8 @@ public class TuristicnaAgencija {
 		return podatki;
 	}
 	
-	/*
-	// Object je nadrazred vseh razredov
-	public static void main(String[] args) {
-		Knjiznica k = new Knjiznica();
-		Gradivo g = new Gradivo("A", "N", 2022, 2, 10);
-		Knjiga knjiga = new Knjiga("Ar", "Na", 2022, 2, 5, 20, "P");
-		
-		k.dodajGradivo(g);
-		k.dodajGradivo(knjiga);
-		
-		System.out.println(k.toString());
-	}
-	*/
 	
-	// Metoda shrani podatke o 
+	
 	public void shraniVDatoteko(String imeDatoteke) throws IOException
 	{
 		//FileWriter fw = new FileWriter(imeDatoteke, true); // Drugi parameter doloèa, da se že obstojeèi datoteki zapis doda

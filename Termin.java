@@ -5,9 +5,24 @@ import java.time.format.DateTimeFormatter;
 
 public class Termin {
 	
+	private int idTermina;
 	private LocalDateTime odhod;
 	private LocalDateTime prihod;
 	
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+
+	
+	public Termin() {
+		idTermina = 000;
+		odhod = LocalDate.parse("2023-02-01 HH:mm", dtf);
+		prihod = LocalDate.parse("2023-02-01 HH:mm", dtf);	
+	}
+	
+	public Termin(LocalDateTime odhod, LocalDateTime prihod, int idTermina) {
+		this.idTermina = idTermina;
+		this.odhod = odhod;
+		this.prihod = prihod;
+	}
 	
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
 
