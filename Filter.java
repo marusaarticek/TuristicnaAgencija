@@ -1,5 +1,8 @@
 public class Filter {
 	
+	
+	//---------------------------------------------------
+	
 	static String izpisPoTerminu() throws Exception {
 		
 		InputStreamReader isr = new InputStreamReader(System.in);
@@ -24,11 +27,11 @@ public class Filter {
 		
 		System.out.println("Mozne pocitnice v okvirju termina:\r\n");
 		
-		for(Pocitnice pocitnice : this.seznamPocitnic) {
+		for(Pocitnice pocitnice : Pocitnice.seznamPocitnic) {
 			for(Termin termin : pocitnice.seznamTerminov) {
 				if(termin.getOdhod().isEqual(odhod) || termin.getOdhod().isAfter(odhod) && termin.getPrihodod().isEqual(prihod) || termin.getPrihod().isBefore(prihod)  {
 					podatki += pocitnice.toString();
-					
+					podatki += pocitnice.zasedenost();
 					podatki += "\r\n";
 				}
 			}	
@@ -56,6 +59,7 @@ public class Filter {
 		for(Pocitnice p : this.setSeznamPocitnic) {
 			if(p.getDrzava().equals(drzava)) {
 				podatki += p.toString();
+				podatki += pocitnice.zasedenost();
 				podatki += "\r\n";
 			}
 		}
@@ -90,6 +94,7 @@ public class Filter {
 		for(Pocitnice p : this.seznamPocitnic) {
 			if(p.getCena() == cena) {
 				podatki += p.toString();
+				podatki += pocitnice.zasedenost();
 				podatki += "\r\n";
 			}
 		}

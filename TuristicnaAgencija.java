@@ -67,6 +67,7 @@ public class TuristicnaAgencija {
 		}
 		if(!pogoj) {
 			this.seznamUporabnikov.add(u);
+			System.out.println("Registracija uspesna.");
 		}
 		else {
 		System.out.println("Uporabnik je ze registriran.");
@@ -97,15 +98,6 @@ public class TuristicnaAgencija {
 		
 		podatki += "\r\n";
 		podatki += "**********   POCITNICE   **********\r\n";
-		podatki += "\r\n";
-		
-		for(Pocitnice p : this.seznamPocitnic) {
-			podatki += g.toString();
-			podatki += "\r\n";
-		}
-		
-		podatki += "\r\n";
-		podatki += "**********   UPORABNIKI   **********\r\n";
 		podatki += "\r\n";
 		
 		for(Pocitnice p : this.seznamPocitnic) {

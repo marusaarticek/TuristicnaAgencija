@@ -59,6 +59,28 @@ public class Pocitinice {
 		return podatki;
 	}
 	
+	public String zasedenost() {
+		int stevilo = 0;
+		String podatki = "";
+		for(Rezervacija r : this.seznamRezervacij) {
+			stevilo += r.stOdraslih + r.stOtrok;
+		}
+		if(stevilo == 0) {
+			podatki += "Zagotovljeno.";
+			break;
+		}
+		else if(stevilo <= this.maxSteviloOseb/2) {
+			podatki += "Skoraj zagotovljeno.";
+			break;
+		}
+		else {
+			podatki = "Ni mozno.";	
+		}
+		
+		return podatki;
+		
+	}
+	
 	
 	
 	
