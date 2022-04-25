@@ -14,6 +14,14 @@ public class Pocitinice {
 		return this.maxSteviloOseb;
 	}
 	
+	public int getCena() {
+		return this.cena;
+	}
+	
+	public String getDrzava() {
+		return this.drzava;
+	}
+	
 	public Pocitnice() {
 		id = 000;
 		maxSteviloOseb = 0;

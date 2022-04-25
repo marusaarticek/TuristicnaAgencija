@@ -188,15 +188,42 @@ public class TuristicnaAgencija {
 		return podatki;
 	}
 	
-	public String izpisPoLetu() throws Exception {
+	public String izpisDrzava() throws Exception {
+
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		
-		int leto = 0;
+		System.out.println("***   Vnesi ime drzave:   ***");
+		System.out.println();
+		System.out.println("Drzava: ");
+		String drzava = br.readLine().trim();
+		
+		String podatki = "";
+		
+		for(Pocitnice p : this.setSeznamPocitnic) {
+			if(p.getDrzava().equals(drzava)) {
+				podatki += p.toString();
+				podatki += "\r\n";
+			}
+		}
+		
+		if(podatki.equals("")) {
+			return "Za izbrano drzavo ni moznih pocitnic!\r\n";
+		}
+		return podatki;
+	}
+	
+	public String izpisPoCeni() throws Exception {
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		
+		int cena = 0;
 		while(true) {
 			try {
-				System.out.println("Vnesi leto za iskanje: ");
-				leto = Integer.parseInt(br.readLine().trim());
+				System.out.println("Vnesi cenovni okvir: ");
+				System.out.println();
+				System.out.println("Cena: ");
+				cena = Integer.parseInt(br.readLine().trim());
 				System.out.println();
 				break;
 			}
@@ -207,19 +234,20 @@ public class TuristicnaAgencija {
 		}
 		String podatki = "";
 		
-		for(Gradivo g : this.seznamGradiv) {
-			if(g.getLetoIzdaje() == leto) {
-				podatki += g.toString();
+		for(Pocitnice p : this.seznamPocitnic) {
+			if(p.getCena() == cena) {
+				podatki += p.toString();
 				podatki += "\r\n";
 			}
 		}
 		
 		if(podatki.equals("")) {
-			return "V izbranem letu ni bilo izdanih gradiv!\r\n";
+			return "V cenovnem okvirju ni moznih pocitnic!\r\n";
 		}
 		
 		return podatki;
 	}
+	
 	
 	public String izpisPoTipu(int tip) {
 		String podatki = "";
