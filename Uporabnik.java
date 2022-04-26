@@ -30,6 +30,11 @@ public class Uporabnik {
 	public String getPriimek() {
 		return this.priimek;
 	}
+	public String getGeslo() {
+		return this.geslo;
+	}
+	
+
 
 	public static Uporabnik ustvariUporabnika() throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
@@ -39,6 +44,7 @@ public class Uporabnik {
 		System.out.println();
 		System.out.println("Vnesi ime: ");
 		String ime = br.readLine().trim();
+		
 		System.out.println();
 		System.out.println("Vnesi priimek: ");
 		String priimek = br.readLine().trim();
@@ -46,6 +52,8 @@ public class Uporabnik {
 		System.out.println("Vnesi geslo: ");
 		String geslo = br.readLine().trim();
 		System.out.println();
+		
+		
 		
 		Uporabnik u = new Uporabnik(ime, priimek, geslo, false);
 		return u;
