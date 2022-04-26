@@ -1,3 +1,8 @@
+import java.io.*;
+import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Rezervacija {
 	
 	private String ime;
@@ -19,7 +24,17 @@ public class Rezervacija {
 		this.stOtrok = stOtrok;	
 	}
 	
+	public int getStOtrok() {
+		return this.stOdraslih;
+	}
+	
+	public int getStOdraslih() {
+		return this.stOdraslih;
+	}
+	/*
 	public static Rezervacija ustvariRezervacijo() throws Exception {
+		
+		
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		
@@ -60,9 +75,21 @@ public class Rezervacija {
 			}
 		}
 		
+		System.out.println("Vnesi izbrane pocitnice (Potovanje, Krizarjenje, Kampiranje, Smucanje)");
+		String izbor = br.readLine().trim();
+		System.out.println();
 		
 		
 		
+		
+		
+		int stOseb = stOdraslih + stOtrok;
+		
+		
+		
+		
+		return stOseb;
 		
 	}
+	*/
 }

@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Pocitinice {
+public class Pocitnice {
 	
 	private int id;
 	private int maxSteviloOseb;
@@ -52,7 +52,7 @@ public class Pocitinice {
 		podatki += "Cenovni okvir: " + this.cena + "\r\n";
 		
 		for(Termin t : this.seznamTerminov) {
-			podatki += s.toString();
+			podatki += t.toString();
 			podatki += "\r\n";
 		}
 		
@@ -63,22 +63,18 @@ public class Pocitinice {
 		int stevilo = 0;
 		String podatki = "";
 		for(Rezervacija r : this.seznamRezervacij) {
-			stevilo += r.stOdraslih + r.stOtrok;
+			stevilo += r.getStOdraslih() + r.getStOtrok();
 		}
 		if(stevilo == 0) {
 			podatki += "Zagotovljeno.";
-			break;
 		}
 		else if(stevilo <= this.maxSteviloOseb/2) {
 			podatki += "Skoraj zagotovljeno.";
-			break;
 		}
 		else {
 			podatki = "Ni mozno.";	
 		}
-		
 		return podatki;
-		
 	}
 	
 	
@@ -95,6 +91,7 @@ public class Pocitinice {
 		String drzava = br.readLine().trim();
 		System.out.println();
 		
+		
 		int id = 0;
 		while(true) {
 			try {
@@ -109,6 +106,7 @@ public class Pocitinice {
 			}
 		}
 		
+		int stevilo;
 		int maxSteviloOseb = 0;
 		while(true) {
 			try {
@@ -137,7 +135,7 @@ public class Pocitinice {
 			}
 		}
 		
-		Pocitnice p = new Pocitinice(id, maxSteviloOseb, drzava, cena);
+		Pocitnice p = new Pocitnice(id, maxSteviloOseb, drzava, cena);
 		return p;	
 	}
 	

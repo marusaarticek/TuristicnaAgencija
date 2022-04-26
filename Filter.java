@@ -1,3 +1,8 @@
+import java.io.*;
+import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Filter {
 	
 	
@@ -15,12 +20,12 @@ public class Filter {
 		System.out.println("***   Iskanje glede na termin pocitnic   ***");
 		System.out.println();
 		System.out.println("Termin odhoda (npr: 2023-02-01):  ");
-		String preberiOdhod = br.readLine().trim();
+		preberiOdhod = br.readLine().trim();
 		LocalDate odhod = LocalDate.parse(preberiOdhod, dtf);
 		
 		System.out.println();
 		System.out.println("Termin prihoda (npr: 2023-02-05):  ");
-		String preberiPrihod = br.readLine().trim();
+		preberiPrihod = br.readLine().trim();
 		LocalDate prihod = LocalDate.parse(preberiPrihod, dtf);
 		
 		String podatki = "";
@@ -29,7 +34,7 @@ public class Filter {
 		
 		for(Pocitnice pocitnice : Pocitnice.seznamPocitnic) {
 			for(Termin termin : pocitnice.seznamTerminov) {
-				if(termin.getOdhod().isEqual(odhod) || termin.getOdhod().isAfter(odhod) && termin.getPrihodod().isEqual(prihod) || termin.getPrihod().isBefore(prihod)  {
+				if(termin.getOdhod().isEqual(odhod) || termin.getOdhod().isAfter(odhod) && termin.getPrihodod().isEqual(prihod) || termin.getPrihod().isBefore(prihod) ) {
 					podatki += pocitnice.toString();
 					podatki += pocitnice.zasedenost();
 					podatki += "\r\n";
@@ -134,7 +139,7 @@ public class Filter {
 		}
 		else if(tip == 4) {
 			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
-				if(this.seznamPocitnic.get(i) instanceof Smučanje) {
+				if(this.seznamPocitnic.get(i) instanceof Smucanje) {
 					podatki += this.seznamPocitnic.get(i).toString();
 					podatki += "\r\n";
 				}

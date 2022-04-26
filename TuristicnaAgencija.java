@@ -19,11 +19,9 @@ public class TuristicnaAgencija {
 		this.seznamRezervacij = new ArrayList<Rezervacija>();
 	}
 	
-	public TuristicnaAgencija(ArrayList<Pocitnice> seznamPocitnic,
-		
-		ArrayList<Uporabnik> seznamUporabnikov, ArrayList<Rezervacija> seznamRezervacij) {
-		this.seznamPocitnic = seznamP;
-		this.seznamUporabnikov = seznamU;
+	public TuristicnaAgencija(ArrayList<Pocitnice> seznamPocitnic, ArrayList<Uporabnik> seznamUporabnikov, ArrayList<Rezervacija> seznamRezervacij) {
+		this.seznamPocitnic = seznamPocitnic;
+		this.seznamUporabnikov = seznamUporabnikov;
 		this.seznamRezervacij = seznamRezervacij;
 	}
 	
@@ -52,7 +50,7 @@ public class TuristicnaAgencija {
 	}
 	
 	public void setSeznamRezervacij(ArrayList<Rezervacija> seznamRezervacij) {
-		this.seznamUporabnikov = seznamRezervacij;
+		this.seznamRezervacij = seznamRezervacij;
 	}
 	
 	//********************************************
@@ -76,7 +74,7 @@ public class TuristicnaAgencija {
 	}
 	
 	
-	
+	/*
 	public void dodajRezervacijo(Rezervacija r) {
 		boolean = false;
 		
@@ -85,6 +83,7 @@ public class TuristicnaAgencija {
 		}
 		
 	}
+	*/
 	
 	@Override
 	public String toString() {
@@ -101,7 +100,7 @@ public class TuristicnaAgencija {
 		podatki += "\r\n";
 		
 		for(Pocitnice p : this.seznamPocitnic) {
-			podatki += g.toString();
+			podatki += p.toString();
 			podatki += "\r\n";
 		}
 		
@@ -109,6 +108,8 @@ public class TuristicnaAgencija {
 	}
 	
 	
+	
+	/*
 	public void shraniVDatoteko(String imeDatoteke) throws IOException
 	{
 		//FileWriter fw = new FileWriter(imeDatoteke, true); // Drugi parameter doloèa, da se že obstojeèi datoteki zapis doda
@@ -159,5 +160,5 @@ public class TuristicnaAgencija {
 	}
 	
 	
-	
+	*/
 }

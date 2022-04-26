@@ -5,7 +5,7 @@ import java.util.*;
 public class Uporabnik {
 	
 	private String ime;
-	Private String priimek;
+	private String priimek;
 	private String geslo;
 	private boolean administrator;
 	
@@ -27,7 +27,9 @@ public class Uporabnik {
 	public String getIme() {
 		return this.ime;
 	}
-	
+	public String getPriimek() {
+		return this.priimek;
+	}
 
 	public static Uporabnik ustvariUporabnika() throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
@@ -49,5 +51,23 @@ public class Uporabnik {
 		return u;
 	}
 	
+	public String shraniKotNiz()
+	{
+		String zapis = "*U\r\n";			// Zapišemo kodo "G", ki oznacuje gradivo
+		zapis += this.ime + "\r\n";		// Zapišemo avtorja
+		zapis += this.priimek + "\r\n";		// Zapišemo naslov
+		zapis += "##\r\n";					// Oznacimo konec branja
+		return zapis;
+	}
 	
+	/*
+	public String shraniKotNiz()
+	{
+		String zapis = "*U\r\n";			// Zapišemo kodo "G", ki oznacuje gradivo
+		zapis += u.getIme() + "\r\n";		// Zapišemo avtorja
+		zapis += u.getPriimek() + "\r\n";		// Zapišemo naslov
+		zapis += "##\r\n";					// Oznacimo konec branja
+		return zapis;
+	}
+	*/
 }
