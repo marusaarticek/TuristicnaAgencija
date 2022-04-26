@@ -24,6 +24,19 @@ public class Uporabnik {
 		this.administrator = administrator;	
 	}	
 	
+	public void setIme(String ime) {
+		this.ime = ime;
+	}
+	public void setPriimek(String priimek) {
+		this.priimek = priimek;
+	}
+	public void setGeslo(String geslo) {
+		this.geslo = geslo;
+	}
+	public void setAdmin(boolean administrator) {
+		this.administrator = administrator;
+	}	
+	
 	public String getIme() {
 		return this.ime;
 	}
@@ -34,30 +47,27 @@ public class Uporabnik {
 		return this.geslo;
 	}
 	
-
-
-	public static Uporabnik ustvariUporabnika() throws Exception {
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		
-		System.out.println("***   Registracija novega uporabnika   ***");
-		System.out.println();
-		System.out.println("Vnesi ime: ");
-		String ime = br.readLine().trim();
-		
-		System.out.println();
-		System.out.println("Vnesi priimek: ");
-		String priimek = br.readLine().trim();
-		System.out.println();
-		System.out.println("Vnesi geslo: ");
-		String geslo = br.readLine().trim();
-		System.out.println();
-		
-		
-		
-		Uporabnik u = new Uporabnik(ime, priimek, geslo, false);
-		return u;
+	public static Uporabnik preberiIzNiza(ArrayList<String> zapis)
+	{
+		Uporabnik uporabnik = new Uporabnik();  // Najprej ustvarimo objekt, kateremu bomo nastavili podane lastnosti
+		try
+		{
+			uporabnik.setIme(zapis.get(0));
+			uporabnik.setPriimek(zapis.get(1));
+			uporabnik.setGeslo(zapis.get(2));
+			boolean str = Boolean.parseBoolean(zapis.get(3));
+			uporabnik.setAdmin(str);
+			
+			return uporabnik;
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Prišlo je do napake v zapisu!");
+			System.out.println();
+			throw ex;
+		}
 	}
+
 	
 	public String shraniKotNiz()
 	{
