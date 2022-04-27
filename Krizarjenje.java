@@ -1,47 +1,47 @@
 import java.io.*;
 import java.util.*;
 
-public class Potovanje extends Pocitnice {
+public class Krizarjenje extends Pocitnice {
 	
 	private String tip;
-	private boolean vodenoPotovanje;
+	private String krizarke;
 	
-	public Potovanje () {
+	public Krizarjenje () {
 		super();
 		this.tip="";
-		this.vodenoPotovanje=false;
+		this.krizarke="";
 	}
 	
-	public Potovanje (int id, int maxSteviloOseb, 
+	public Krizarjenje (int id, int maxSteviloOseb, 
 	String drzava, int cena, ArrayList<Termin> termin,ArrayList<Rezervacija> rezervacija,
-	String tip, boolean vodenoPotovanje) {
+	String tip, String krizarke) {
 		super(id, maxSteviloOseb, drzava, cena, termin, rezervacija);
 		this.tip=tip;
-		this.vodenoPotovanje=vodenoPotovanje;
+		this.krizarke=krizarke;
 	}
 	
 	public void setTip(String tip) {
 		this.tip = tip;
 	}
-	public void setVodeno(boolean vodeno) {
-		vodenoPotovanje = vodeno;
+	public void setKrizarke(String krizarke) {
+		this.krizarke=krizarke;
 	}
 	public String getTip() {
 		return this.tip;
 	}
-	public boolean getVodeno() {
-		return this.vodenoPotovanje;
+	public String getKrizarke() {
+		return this.krizarke;
 	}
 	
 	@Override
     public String toString() {
 		String podatki = "";
 		
-		podatki += "*****   Podatki o potovanju   *****\r\n";
+		podatki += "*****   Podatki o krizarjenju   *****\r\n";
 		podatki += "--------------------------------\r\n";
 		podatki += super.toStringPocitnice();
 		podatki += "Tip potovanja: " + this.tip + "\r\n";
-		podatki += "Vodeno potovanje: " + this.vodenoPotovanje + "\r\n";
+		podatki += "Krizarka: " + this.krizarke + "\r\n";
 		podatki += "\r\n";
 		
 		for(Termin t : this.getSeznamTerminov()) {

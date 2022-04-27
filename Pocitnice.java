@@ -22,6 +22,10 @@ public class Pocitnice {
 		return this.drzava;
 	}
 	
+	public ArrayList<Termin> getSeznamTerminov() {
+		return this.seznamTerminov;
+	}
+	
 	public Pocitnice() {
 		id = 000;
 		maxSteviloOseb = 0;
@@ -36,11 +40,29 @@ public class Pocitnice {
 		this.maxSteviloOseb = 0;
 		this.drzava = "";
 		this.cena = 0;
-		this.seznamTerminov = new ArrayList<Termin>();
+		this.seznamTerminov =  new ArrayList<Termin>();
 		this.seznamRezervacij = new ArrayList<Rezervacija>();
 	}
 	
+	public Pocitnice(int id, int maxSteviloOseb, String drzava, int cena,
+	ArrayList<Termin> termin,ArrayList<Rezervacija> rezervacija) {
+		this.id = 000;
+		this.maxSteviloOseb = 0;
+		this.drzava = "";
+		this.cena = 0;
+		this.seznamTerminov = termin;
+		this.seznamRezervacij = rezervacija;
+	}
+	
 	//-------------------------------------------
+	
+	 public String toStringPocitnice() {
+		String podatki = "";
+		
+		podatki += "Drzava: " + this.drzava + "\r\n";
+		podatki += "Cena: " + this.cena + "\r\n";
+		return podatki;
+	}
 	
 	@Override
 	public String toString() {
