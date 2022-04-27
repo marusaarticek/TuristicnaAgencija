@@ -8,22 +8,18 @@ public class TuristicnaAgencija {
 	
 	private ArrayList<Pocitnice> seznamPocitnic;
 	private ArrayList<Uporabnik> seznamUporabnikov;
-	private ArrayList<Rezervacija> seznamRezervacij;
-	
 	
 	//konstruktorji
 	
 	public TuristicnaAgencija() {
 		this.seznamPocitnic = new ArrayList<Pocitnice>();
 		this.seznamUporabnikov = new ArrayList<Uporabnik>();
-		this.seznamRezervacij = new ArrayList<Rezervacija>();
-	}
+		}
 	
-	public TuristicnaAgencija(ArrayList<Pocitnice> seznamPocitnic, ArrayList<Uporabnik> seznamUporabnikov, ArrayList<Rezervacija> seznamRezervacij) {
+	public TuristicnaAgencija(ArrayList<Pocitnice> seznamPocitnic, ArrayList<Uporabnik> seznamUporabnikov) {
 		this.seznamPocitnic = seznamPocitnic;
 		this.seznamUporabnikov = seznamUporabnikov;
-		this.seznamRezervacij = seznamRezervacij;
-	}
+		}
 	
 	//---------------------------------------
 	
@@ -36,9 +32,7 @@ public class TuristicnaAgencija {
 		return this.seznamUporabnikov;
 	}
 	
-	public ArrayList<Rezervacija> getSeznamRezervacij() {
-		return this.seznamRezervacij;
-	}
+	
 
 	// metoda set
 	public void setSeznamPocitnic(ArrayList<Pocitnice> seznamPocitnic) {
@@ -49,9 +43,7 @@ public class TuristicnaAgencija {
 		this.seznamUporabnikov = seznamUporabnikov;
 	}
 	
-	public void setSeznamRezervacij(ArrayList<Rezervacija> seznamRezervacij) {
-		this.seznamRezervacij = seznamRezervacij;
-	}
+	
 	
 	//********************************************
 	
@@ -139,6 +131,11 @@ public class TuristicnaAgencija {
 		return flag;
 	}
 	
+	public void ustvariRezervacijo() {
+		
+		for(Pocitnice p : this.seznamPocitnic)
+		
+	}
 	
 	/*
 	public void dodajRezervacijo(Rezervacija r) {

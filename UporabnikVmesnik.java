@@ -24,7 +24,7 @@ public class UporabnikVmesnik {
 			
 			switch(izbira) {
 				case 's':
-					agencija.prijavaUporabnika();
+					boolean flag = agencija.prijavaUporabnika();
 					if(flag) {
 						while(true) {
 							System.out.println("Pritisni (a) za prikaz pocitnic glede na datum.");
@@ -74,6 +74,7 @@ public class UporabnikVmesnik {
 							}
 						}
 					}else {
+						System.out.println("Prijava neuspesna!");
 						break;
 					}
 					

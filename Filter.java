@@ -5,9 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 public class Filter {
 	
-	
-	//---------------------------------------------------
-	
 	static String izpisPoTerminu() throws Exception {
 		
 		InputStreamReader isr = new InputStreamReader(System.in);
@@ -148,6 +145,86 @@ public class Filter {
 		return podatki;
 	}
 	
-	
+	public static void novaRezervacija() throws Exception {
+		
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		
+		System.out.println("***   Vnos nove Rezervacije   ***");
+		System.out.println();
+		System.out.println("Vnesi ime: ");
+		String ime = br.readLine().trim();
+		System.out.println();
+		System.out.println("Vnesi priimek: ");
+		String priimek = br.readLine().trim();
+		System.out.println();
+		
+		int stOdraslih = 0;
+		while(true) {
+			try {
+				System.out.println("Vnesi stevilo odraslih: ");
+				stOdraslih = Integer.parseInt(br.readLine().trim());
+				System.out.println();
+				break;
+			} 
+			catch (Exception e) {
+				System.out.println("Napacen format vnosa!");
+				System.out.println();
+			}
+		}
+		int stOtrok = 0;
+		while(true) {
+			try {
+				System.out.println("Vnesi stevilo otrok: ");
+				stOtrok = Integer.parseInt(br.readLine().trim());
+				System.out.println();
+				break;
+			}
+			catch (Exception e) {
+				System.out.println("Napacen format vnosa!");
+				System.out.println();
+			}
+		}
+		int turisti = stOdraslih+stOtrok;
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+		String preberiOdhod = "";
+		String preberiPrihod = "";
+		
+		// za vsak tip pocitnic so na voljo termini
+		// za vsak termin je na voljo maxstoseb - prostih mest
+		
+		System.out.println("***   Rezervacija pocitnic - TERMIN   ***");
+		System.out.println();
+		System.out.println("Termin odhoda (npr: 2023-02-01):  ");
+		preberiOdhod = br.readLine().trim();
+		LocalDate odhod = LocalDate.parse(preberiOdhod, dtf);
+		
+		System.out.println();
+		System.out.println("Termin prihoda (npr: 2023-02-05):  ");
+		preberiPrihod = br.readLine().trim();
+		LocalDate prihod = LocalDate.parse(preberiPrihod, dtf);
+		
+		for(Pocitnice pocitnice : Pocitnice.seznamPocitnic) {
+			for(Termin termin : pocitnice.seznamTerminov) {
+				if(termin.getOdhod().isEqual(odhod) || termin.getOdhod().isAfter(odhod) && termin.getPrihodod().isEqual(prihod) || termin.getPrihod().isBefore(prihod) ) {
+					int stevilo;
+					for(Rezervacija r : pocitnice.seznamRezervacij) {
+						stevilo += r.getStOdraslih() + r.getStOtrok();
+					}
+					if( stevilo + turisti <= pocitnice.getmaxSteviloOseb()) {
+						System.out.println("Rezervacija uspesna.");
+						Rezervacija r = new Rezervacija(ime, priimek, stOdraslih, stOtrok);
+						pocitnice.seznamRezervacij.add(r);
+						break;
+					}
+					else {
+						System.out.println("Rezervacija NE uspesna.");
+						break;
+					}
+				}
+			}	
+		}
+	}
 	
 }
