@@ -26,6 +26,10 @@ public class Pocitnice {
 		return this.seznamTerminov;
 	}
 	
+	public ArrayList<Pocitnice> getSeznamRezervacij() {
+		return this.seznamRezervacij;
+	}
+	
 	public Pocitnice() {
 		id = 000;
 		maxSteviloOseb = 0;

@@ -37,7 +37,7 @@ public class Smucanje extends Pocitnice {
     public String toString() {
 		String podatki = "";
 		
-		podatki += "*****   Podatki o kampiranju   *****\r\n";
+		podatki += "*****   Podatki o smucanju   *****\r\n";
 		podatki += "--------------------------------\r\n";
 		podatki += super.toStringPocitnice();
 		podatki += "Najem hotela: " + this.najemHotela + "\r\n";

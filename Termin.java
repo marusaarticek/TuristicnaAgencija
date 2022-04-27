@@ -26,11 +26,11 @@ public class Termin {
 		this.prihod = prihod;
 	}
 	
-	public LocalDateTime getOdhod() {
-		return this.odhod;
+	public LocalDate getOdhod() {
+		return this.odhod.toLocalDate();
 	}
-	public LocalDateTime getPrihod() {
-		return this.prihod;
+	public LocalDate getPrihod() {
+		return this.prihod.toLocalDate();
 	}
 	
 	
