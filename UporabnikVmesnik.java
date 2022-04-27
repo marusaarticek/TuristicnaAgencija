@@ -4,10 +4,10 @@ import java.util.*;
 
 public class UporabnikVmesnik {
 	
-	public static main void(String args[]) throws Exception {
+	public static void main(String args[]) throws Exception {
 		
 		TuristicnaAgencija agencija = new TuristicnaAgencija();
-		agencija.dodajIzDatoteke(Uporabniki.txt);
+		//agencija.dodajIzDatoteke(Uporabniki.txt);
 		
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
@@ -41,31 +41,24 @@ public class UporabnikVmesnik {
 							
 							switch(izbira) {
 								case 'a':
-									System.out.println(Filter.izpisPoTerminu());
+									System.out.println(agencija.izpisPoTerminu());
 									break;
 								case 'b':
-									System.out.println(Filter.izpisDrzava());
+									System.out.println(agencija.izpisDrzava());
 									break;
 								case 'c':
-									System.out.println(Filter.izpisPoCeni());
+									System.out.println(agencija.izpisPoCeni());
 									break;
 								case 'd':
-									System.out.println(Filter.izpisPoTipu());
+									//System.out.println(agencija.izpisPoTipu());
 									break;
-								case 'l':
-									System.out.println(knjiznica.izpisPoLetu());
+								case 'f':
+									agencija.novaRezervacija();
+									System.out.println();
 									break;
 								case 'p':
-									System.out.println("Vnesite ime datoteke: ");
-									imeDat = br.readLine().trim();
-									knjiznica.dodajIzDatoteke(imeDat);
-									System.out.println();
 									break;
 								case 's':
-									System.out.println("Vnesite ime datoteke: ");
-									imeDat = br.readLine().trim();
-									knjiznica.shraniVDatoteko(imeDat);
-									System.out.println();
 									break;
 								case 'q':
 									return;
@@ -73,13 +66,11 @@ public class UporabnikVmesnik {
 									System.out.println("Pritisnili ste napacno izbiro!");
 							}
 						}
-					}else {
+					}
+					else{
 						System.out.println("Prijava neuspesna!");
 						break;
 					}
-					
-				System.out.println();
-						}
 				case 'r':
 					agencija.registracijaUporabnika();
 					break;

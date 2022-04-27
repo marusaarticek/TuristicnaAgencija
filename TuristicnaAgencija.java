@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 import java.time.LocalDateTime;
@@ -49,6 +48,7 @@ public class TuristicnaAgencija {
 	
 	
 	//********************************************
+	
 	
 	public void registracijaUporabnika() throws Exception {
 		
@@ -135,16 +135,6 @@ public class TuristicnaAgencija {
 	}
 	
 	
-	/*
-	public void dodajRezervacijo(Rezervacija r) {
-		boolean = false;
-		
-		for(Pocitnice pocitnice : this.seznamPocitnic) {
-			if( pocitnice.getmaxSteviloOseb() 
-		}
-		
-	}
-	*/
 	
 	@Override
 	public String toString() {
@@ -214,6 +204,44 @@ public class TuristicnaAgencija {
 	}
 	
 	//-------------------------------------------------------------------
+	
+	public String izpisPoTipu(int tip) {
+		String podatki = "";
+		if(tip == 1) {
+			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
+				if(this.seznamPocitnic.get(i) instanceof Potovanje) {
+					podatki += this.seznamPocitnic.get(i).toString();
+					podatki += "\r\n";
+				}
+			}
+		} 
+		else if(tip == 2) {
+			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
+				if(this.seznamPocitnic.get(i) instanceof Kampiranje) {
+					podatki += this.seznamPocitnic.get(i).toString();
+					podatki += "\r\n";
+				}
+			}
+		}
+		else if(tip == 3) {
+			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
+				if(this.seznamPocitnic.get(i) instanceof Krizarjenje) {
+					podatki += this.seznamPocitnic.get(i).toString();
+					podatki += "\r\n";
+				}
+			}
+		}
+		else if(tip == 4) {
+			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
+				if(this.seznamPocitnic.get(i) instanceof Smucanje) {
+					podatki += this.seznamPocitnic.get(i).toString();
+					podatki += "\r\n";
+				}
+			}
+		}
+		return podatki;
+	}
+	
 	public String izpisPoTerminu() throws Exception {
 		
 		InputStreamReader isr = new InputStreamReader(System.in);
@@ -379,26 +407,33 @@ public class TuristicnaAgencija {
 		preberiPrihod = br.readLine().trim();
 		LocalDate prihod = LocalDate.parse(preberiPrihod, dtf);
 		
+		int stevilo = 0;
 		for(Pocitnice pocitnice : this.seznamPocitnic) {
 			for(Termin termin : pocitnice.getSeznamTerminov()) {
 				if(termin.getOdhod().isEqual(odhod) || termin.getOdhod().isAfter(odhod) && termin.getPrihod().isEqual(prihod) || termin.getPrihod().isBefore(prihod) ) {
-					int stevilo;
-					for(Rezervacija r : pocitnice.getSeznamRezervacij()) {
-						stevilo += r.getStOdraslih() + r.getStOtrok();
-					}
-					if( stevilo + turisti <= pocitnice.getmaxSteviloOseb()) {
-						System.out.println("Rezervacija uspesna.");
-						Rezervacija r = new Rezervacija(ime, priimek, stOdraslih, stOtrok);
-						pocitnice.seznamRezervacij.add(r);
-						break;
-					}
-					else {
-						System.out.println("Rezervacija NE uspesna.");
-						break;
-					}
+					System.out.println("uspesen termin");
+					break;
 				}
+				else{
+					System.out.println("neuspesen termin");
+					break;
+				}
+			}
+			for(Rezervacija r : pocitnice.getSeznamRezervacij()) {
+				stevilo += r.getStOdraslih() + r.getStOtrok();
+			}
+			if(stevilo + turisti <= pocitnice.getmaxSteviloOseb()) {
+				System.out.println("Rezervacija uspesna.");
+				Rezervacija r = new Rezervacija(ime, priimek, stOdraslih, stOtrok);
+				pocitnice.dodajRezervacijo(r);
+				break;
+			}
+			else {
+				System.out.println("Rezervacija NE uspesna.");
+				return;
 			}	
 		}
 	}
-	
 }
+
+	

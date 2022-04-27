@@ -26,7 +26,7 @@ public class Pocitnice {
 		return this.seznamTerminov;
 	}
 	
-	public ArrayList<Pocitnice> getSeznamRezervacij() {
+	public ArrayList<Rezervacija> getSeznamRezervacij() {
 		return this.seznamRezervacij;
 	}
 	
@@ -40,12 +40,21 @@ public class Pocitnice {
 	}
 	
 	public Pocitnice(int id, int maxSteviloOseb, String drzava, int cena) {
-		this.id = 000;
-		this.maxSteviloOseb = 0;
-		this.drzava = "";
-		this.cena = 0;
-		this.seznamTerminov =  new ArrayList<Termin>();
-		this.seznamRezervacij = new ArrayList<Rezervacija>();
+		this.id = id;
+		this.maxSteviloOseb = maxSteviloOseb;
+		this.drzava = drzava;
+		this.cena = cena;
+		seznamTerminov =  new ArrayList<Termin>();
+		seznamRezervacij = new ArrayList<Rezervacija>();
+	}
+	
+	public Pocitnice(int maxSteviloOseb, String drzava, int cena) {
+		id = 11;
+		this.maxSteviloOseb = maxSteviloOseb;
+		this.drzava = drzava;
+		this.cena = cena;
+		seznamTerminov =  new ArrayList<Termin>();
+		seznamRezervacij = new ArrayList<Rezervacija>();
 	}
 	
 	public Pocitnice(int id, int maxSteviloOseb, String drzava, int cena,
@@ -103,7 +112,9 @@ public class Pocitnice {
 		return podatki;
 	}
 	
-	
+	public void dodajRezervacijo(Rezervacija r) {
+		this.seznamRezervacij.add(r);
+	}
 	
 	
 	public static Pocitnice ustvariPocitnice() throws Exception {
@@ -165,8 +176,11 @@ public class Pocitnice {
 		return p;	
 	}
 	
-	
-	
-	
-	
+	public static void main(String[] args) {
+		Pocitnice p = new Pocitnice();
+		Pocitnice p2 = new Pocitnice(3, "Slovenija", 100);
+		
+		System.out.println(p.toString());
+		System.out.println(p2.toString());
+	}
 }

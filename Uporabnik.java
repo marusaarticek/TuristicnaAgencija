@@ -88,4 +88,9 @@ public class Uporabnik {
 		return zapis;
 	}
 	*/
+	
+	public static void main(String [] args) {
+		Uporabnik u = new Uporabnik();
+		Uporabnik u2 = new Uporabnik("js", "js", "js", false);
+	}
 }
