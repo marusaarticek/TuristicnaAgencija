@@ -48,6 +48,15 @@ public class Pocitnice {
 		seznamRezervacij = new ArrayList<Rezervacija>();
 	}
 	
+	public Pocitnice(int id, int maxSteviloOseb, String drzava, int cena,ArrayList<Termin> termin ) {
+		this.id = id;
+		this.maxSteviloOseb = maxSteviloOseb;
+		this.drzava = drzava;
+		this.cena = cena;
+		seznamTerminov =  termin;
+		seznamRezervacij = new ArrayList<Rezervacija>();
+	}
+	
 	public Pocitnice(int maxSteviloOseb, String drzava, int cena) {
 		id = 11;
 		this.maxSteviloOseb = maxSteviloOseb;
