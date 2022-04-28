@@ -158,6 +158,20 @@ public class TuristicnaAgencija {
 		return podatki;
 	}
 	
+	public void shraniVDatotekoP(String imeDatoteke) throws IOException
+	{
+		//FileWriter fw = new FileWriter(imeDatoteke, true); // Drugi parameter doloèa, da se že obstojeèi datoteki zapis doda
+		FileWriter fw = new FileWriter(imeDatoteke, false); //datoteki se spremeni zapis v celoti
+		PrintWriter dat = new PrintWriter(fw);
+
+		for(Pocitnice p : this.seznamPocitnic)
+		{
+			dat.print(p.shraniKotNiz());
+		}
+		dat.println("***");
+
+		dat.close();
+	} 
 	
 	public void shraniVDatoteko(String imeDatoteke) throws IOException
 	{
@@ -177,7 +191,7 @@ public class TuristicnaAgencija {
 
 	// Metoda doda uporabnike, shranjene v datoteki, v turisticno agencijo
 	//preberi uporabnike iz datoteke
-	public void dodajIzDatoteke(String imeDatoteke) throws Exception
+	public void dodajIzDatotekeU(String imeDatoteke) throws Exception
 	{
 		FileReader fr = new FileReader(imeDatoteke);
 		BufferedReader dat = new BufferedReader(fr);
@@ -198,6 +212,68 @@ public class TuristicnaAgencija {
 
 				Uporabnik novUporabnik = Uporabnik.preberiIzNiza(uporabnikiPodatki);
 				this.seznamUporabnikov.add(novUporabnik);
+			}
+		}
+		dat.close();
+	}
+	
+	public void dodajIzDatotekeP(String imeDatoteke) throws Exception
+	{
+		FileReader fr = new FileReader(imeDatoteke);
+		BufferedReader dat = new BufferedReader(fr);
+
+		ArrayList<String> pocitnicePodatki;
+		
+		while(dat.ready())
+		{
+			String vrstica = dat.readLine().trim();
+			if(vrstica.equals("*S"))
+			{
+				pocitnicePodatki = new ArrayList<String>();
+				while(dat.ready() && !vrstica.equals("##"))
+				{
+					vrstica = dat.readLine().trim();
+					pocitnicePodatki.add(vrstica);
+				}
+
+				Smucanje s = Smucanje.preberiIzNiza(pocitnicePodatki);
+				this.seznamPocitnic.add(s);
+			}
+			if(vrstica.equals("*K"))
+			{
+				pocitnicePodatki = new ArrayList<String>();
+				while(dat.ready() && !vrstica.equals("##"))
+				{
+					vrstica = dat.readLine().trim();
+					pocitnicePodatki.add(vrstica);
+				}
+
+				Krizarjenje k = Krizarjenje.preberiIzNiza(pocitnicePodatki);
+				this.seznamPocitnic.add(k);
+			}
+			if(vrstica.equals("*C"))
+			{
+				pocitnicePodatki = new ArrayList<String>();
+				while(dat.ready() && !vrstica.equals("##"))
+				{
+					vrstica = dat.readLine().trim();
+					pocitnicePodatki.add(vrstica);
+				}
+
+				Kampiranje kamp = Kampiranje.preberiIzNiza(pocitnicePodatki);
+				this.seznamPocitnic.add(kamp);
+			}
+			if(vrstica.equals("*M"))
+			{
+				pocitnicePodatki = new ArrayList<String>();
+				while(dat.ready() && !vrstica.equals("##"))
+				{
+					vrstica = dat.readLine().trim();
+					pocitnicePodatki.add(vrstica);
+				}
+
+				Pocitnice p = Pocitnice.preberiIzNiza(pocitnicePodatki);
+				this.seznamPocitnic.add(p);
 			}
 		}
 		dat.close();
@@ -434,6 +510,17 @@ public class TuristicnaAgencija {
 			}	
 		}
 	}
+	
+	
+	public static void main(String[] args) {
+		TuristicnaAgencija agencija = new TuristicnaAgencija();
+		
+		
+		Pocitnice p2 = new Pocitnice(3, "Slovenija", 100);
+		System.out.println(p2.toString());
+	}
+	
+	
 }
 
 	

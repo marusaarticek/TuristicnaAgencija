@@ -63,6 +63,64 @@ public class Krizarjenje extends Pocitnice {
 		return podatki;
 	}
 	
+	public String shraniKotNiz()
+	{
+		String zapis = "*K\r\n";			
+		zapis += this.getDrzava() + "\r\n";		
+		zapis += this.getCena() + "\r\n";
+		zapis += this.tip + "\r\n";		
+		zapis += this.krizarke + "\r\n";
+		
+		for(Termin t : this.getSeznamTerminov()) // Zapišemo še vsak status posebej
+		{
+			zapis += t.shraniKotNiz();
+		}
+		for(Rezervacija r : this.getSeznamRezervacij()) // Zapišemo še vsak status posebej
+		{
+			zapis += r.shraniKotNiz();
+		}
+		zapis += "##\r\n";					// Oznacimo konec branja
+		return zapis;
+	}
+	
+	public static Krizarjenje preberiIzNiza(ArrayList<String> zapis)
+	{
+		Krizarjenje k = new Krizarjenje(); 
+		try
+		{
+			k.setDrzava(zapis.get(0));
+			k.setCena(Integer.parseInt(zapis.get(1)));
+			k.setTip(zapis.get(2));
+			k.setKrizarke(zapis.get(3));
+			
+			ArrayList<String> terminPodatki;
+			//ArrayList<String> rezervacijaPodatki;
+			for(int i=4; i < zapis.size(); i++)
+			{
+				if(zapis.get(i).trim().equals("*T"))	// Ce vrstica vsebuje *S, imamo zapis o statusu
+				{
+					terminPodatki = new ArrayList<String>();	// Pripravimo nov seznam, v katerega bomo dodajali podatke o trenutnem statusu
+					i++;
+					while(!zapis.get(i).trim().equals("#"))	// Dokler se zapis o statusu ne konca (dokler se ne pojavi #), dodajamo podatke v seznam
+					{
+						terminPodatki.add(zapis.get(i));
+						i++;
+					}
+					Termin termin = Termin.preberiIzNiza(terminPodatki);
+
+					k.dodajTermin(termin);
+				}
+			}
+			return k;
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Prišlo je do napake v zapisu!");
+			System.out.println();
+			throw ex;
+		}
+	}
+	
 	public static Krizarjenje ustvariKrizarjenje() throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);

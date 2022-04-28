@@ -32,7 +32,12 @@ public class Termin {
 	public LocalDate getPrihod() {
 		return this.prihod.toLocalDate();
 	}
-	
+	public void setOdhod(LocalDateTime odhod) {
+		this.odhod = odhod;
+	}
+	public void setPrihod(LocalDateTime prihod) {
+		this.prihod = prihod;
+	}
 	
 	@Override
     public String toString() {
@@ -45,9 +50,33 @@ public class Termin {
 		return podatki;
 	}
 	
+	public String shraniKotNiz() {
+		String zapis = "*T\r\n";			// Zapišemo kodo "S", ki oznacuje status
+		zapis += this.odhod + "\r\n";
+		zapis += this.prihod + "\r\n";
+		zapis += "#\r\n";
+		return zapis;
+	}
 	
-	
-	
+	public static Termin preberiIzNiza(ArrayList<String> zapis)
+	{
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm");
+		Termin termin = new Termin();  // Najprej ustvarimo objekt, kateremu bomo nastavili podane lastnosti
+		try
+		{
+			termin.setOdhod(LocalDateTime.parse(zapis.get(0), dtf));
+			
+			termin.setPrihod(LocalDateTime.parse(zapis.get(1), dtf));
+			
+			return termin;
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Prišlo je do napake v zapisu!");
+			System.out.println();
+			throw ex;
+		}
+	}
 	
 	
 	

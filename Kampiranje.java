@@ -55,6 +55,73 @@ public class Kampiranje extends Pocitnice {
 		return podatki;
 	}
 	
+	
+	public String shraniKotNiz()
+	{
+		String zapis = "*C\r\n";			
+		zapis += this.getDrzava() + "\r\n";		
+		zapis += this.getCena() + "\r\n";
+		zapis += this.najemSotora + "\r\n";		
+		zapis += this.hisniLjubljencki  + "\r\n";
+		
+		for(Termin t : this.getSeznamTerminov())
+		{
+			zapis += t.shraniKotNiz();
+		}
+		for(Rezervacija r : this.getSeznamRezervacij()) 
+		{
+			zapis += r.shraniKotNiz();
+		}
+		zapis += "##\r\n";					
+		return zapis;
+	}
+	
+	public static Kampiranje preberiIzNiza(ArrayList<String> zapis)
+	{
+		Kampiranje kamp = new Kampiranje(); 
+		try
+		{
+			kamp.setDrzava(zapis.get(0));
+			kamp.setCena(Integer.parseInt(zapis.get(1)));
+			if(zapis.get(2).equals("true")) {
+				kamp.setNajem(true);
+			} else {
+				kamp.setNajem(false);
+			}
+			if(zapis.get(3).equals("true")) {
+				kamp.setPet(true);
+			} else {
+				kamp.setPet(false);
+			}
+
+			ArrayList<String> terminPodatki;
+			//ArrayList<String> rezervacijaPodatki;
+			for(int i=4; i < zapis.size(); i++)
+			{
+				if(zapis.get(i).trim().equals("*T"))	// Ce vrstica vsebuje *S, imamo zapis o statusu
+				{
+					terminPodatki = new ArrayList<String>();	// Pripravimo nov seznam, v katerega bomo dodajali podatke o trenutnem statusu
+					i++;
+					while(!zapis.get(i).trim().equals("#"))	// Dokler se zapis o statusu ne konca (dokler se ne pojavi #), dodajamo podatke v seznam
+					{
+						terminPodatki.add(zapis.get(i));
+						i++;
+					}
+					Termin termin = Termin.preberiIzNiza(terminPodatki);
+
+					kamp.dodajTermin(termin);
+				}
+			}
+			return kamp;
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Prišlo je do napake v zapisu!");
+			System.out.println();
+			throw ex;
+		}
+	}
+	
 	public static Kampiranje ustvariKampiranje() throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);

@@ -55,6 +55,69 @@ public class Potovanje extends Pocitnice {
 		return podatki;
 	}
 	
+	public String shraniKotNiz()
+	{
+		String zapis = "*M\r\n";			
+		zapis += this.getDrzava() + "\r\n";		
+		zapis += this.getCena() + "\r\n";
+		zapis += this.tip + "\r\n";		
+		zapis += this.vodenoPotovanje  + "\r\n";
+		
+		for(Termin t : this.getSeznamTerminov()) // Zapišemo še vsak status posebej
+		{
+			zapis += t.shraniKotNiz();
+		}
+		for(Rezervacija r : this.getSeznamRezervacij()) // Zapišemo še vsak status posebej
+		{
+			zapis += r.shraniKotNiz();
+		}
+		zapis += "##\r\n";					// Oznacimo konec branja
+		return zapis;
+	}
+	
+	
+	public static Potovanje preberiIzNiza(ArrayList<String> zapis)
+	{
+		Potovanje pot = new Potovanje(); 
+		try
+		{
+			pot.setDrzava(zapis.get(0));
+			pot.setCena(Integer.parseInt(zapis.get(1)));
+			pot.setTip(zapis.get(2));
+			if(zapis.get(3).equals("true")) {
+				pot.setVodeno(true);
+			} else {
+				pot.setVodeno(false);
+			}
+			
+			ArrayList<String> terminPodatki;
+			//ArrayList<String> rezervacijaPodatki;
+			for(int i=4; i < zapis.size(); i++)
+			{
+				if(zapis.get(i).trim().equals("*T"))	// Ce vrstica vsebuje *S, imamo zapis o statusu
+				{
+					terminPodatki = new ArrayList<String>();	// Pripravimo nov seznam, v katerega bomo dodajali podatke o trenutnem statusu
+					i++;
+					while(!zapis.get(i).trim().equals("#"))	// Dokler se zapis o statusu ne konca (dokler se ne pojavi #), dodajamo podatke v seznam
+					{
+						terminPodatki.add(zapis.get(i));
+						i++;
+					}
+					Termin termin = Termin.preberiIzNiza(terminPodatki);
+
+					pot.dodajTermin(termin);
+				}
+			}
+			return pot;
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Prišlo je do napake v zapisu!");
+			System.out.println();
+			throw ex;
+		}
+	}
+	
 	public static Potovanje ustvariPotovanje() throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);

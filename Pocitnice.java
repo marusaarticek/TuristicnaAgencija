@@ -10,6 +10,19 @@ public class Pocitnice {
 	private ArrayList<Termin> seznamTerminov;
 	private ArrayList<Rezervacija> seznamRezervacij;
 	
+	public void setDrzava(String drzava) {
+		this.drzava = drzava;
+	}
+	public void setCena(int cena) {
+		this.cena=cena;
+	}
+	public void setTermin(ArrayList<Termin> termin) {
+		seznamTerminov=termin;
+	}
+	public void setRezervacija(ArrayList<Rezervacija> rezervacija) {
+		seznamRezervacij=rezervacija;
+	}
+	
 	public int getmaxSteviloOseb() {
 		return this.maxSteviloOseb;
 	}
@@ -28,6 +41,10 @@ public class Pocitnice {
 	
 	public ArrayList<Rezervacija> getSeznamRezervacij() {
 		return this.seznamRezervacij;
+	}
+	
+	public void dodajTermin(Termin t) {
+		this.seznamTerminov.add(t);
 	}
 	
 	public Pocitnice() {
@@ -77,8 +94,25 @@ public class Pocitnice {
 	}
 	
 	//-------------------------------------------
+	public String shraniKotNiz()
+	{
+		String zapis = "*P\r\n";			
+		zapis += this.drzava + "\r\n";		
+		zapis += this.cena + "\r\n";		// Zapišemo naslov
+		
+		for(Termin t : this.seznamTerminov) // Zapišemo še vsak status posebej
+		{
+			zapis += t.shraniKotNiz();
+		}
+		for(Rezervacija r : this.seznamRezervacij) // Zapišemo še vsak status posebej
+		{
+			zapis += r.shraniKotNiz();
+		}
+		zapis += "##\r\n";					// Oznacimo konec branja
+		return zapis;
+	}
 	
-	 public String toStringPocitnice() {
+	public String toStringPocitnice() {
 		String podatki = "";
 		
 		podatki += "Drzava: " + this.drzava + "\r\n";
@@ -102,6 +136,43 @@ public class Pocitnice {
 		
 		return podatki;
 	}
+	
+	public static Pocitnice preberiIzNiza(ArrayList<String> zapis)
+	{
+		Pocitnice  p = new Pocitnice (); 
+		try
+		{
+			p.setDrzava(zapis.get(0));
+			p.setCena(Integer.parseInt(zapis.get(1)));
+
+			ArrayList<String> terminPodatki;
+			//ArrayList<String> rezervacijaPodatki;
+			for(int i=2; i < zapis.size(); i++)
+			{
+				if(zapis.get(i).trim().equals("*T"))	// Ce vrstica vsebuje *S, imamo zapis o statusu
+				{
+					terminPodatki = new ArrayList<String>();	// Pripravimo nov seznam, v katerega bomo dodajali podatke o trenutnem statusu
+					i++;
+					while(!zapis.get(i).trim().equals("#"))	// Dokler se zapis o statusu ne konca (dokler se ne pojavi #), dodajamo podatke v seznam
+					{
+						terminPodatki.add(zapis.get(i));
+						i++;
+					}
+					Termin termin = Termin.preberiIzNiza(terminPodatki);
+
+					p.dodajTermin(termin);
+				}
+			}
+			return p;
+		}
+		catch(Exception ex)
+		{
+			System.out.println("Prišlo je do napake v zapisu!");
+			System.out.println();
+			throw ex;
+		}
+	}
+	
 	
 	public String zasedenost() {
 		int stevilo = 0;
