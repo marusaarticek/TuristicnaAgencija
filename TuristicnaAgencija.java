@@ -50,7 +50,7 @@ public class TuristicnaAgencija {
 	//********************************************
 	
 	
-	public void registracijaUporabnika() throws Exception {
+	public void registracijaUporabnika(boolean admin) throws Exception {
 		
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
@@ -80,6 +80,12 @@ public class TuristicnaAgencija {
 			Uporabnik u = new Uporabnik(ime, priimek, geslo, false);
 			this.seznamUporabnikov.add(u);
 			System.out.println("Registracija uspesna.");
+		}
+		
+		if(admin) {
+			Uporabnik u = new Uporabnik(ime, priimek, geslo, true);
+			this.seznamUporabnikov.add(u);
+			System.out.println("Registracija admina uspesna.");
 		}
 	}
 	
@@ -309,14 +315,63 @@ public class TuristicnaAgencija {
 		for(Pocitnice p : this.seznamPocitnic) {
 			if(p.getId() == id) {
 				this.seznamPocitnic.remove(p);
+				p.getSeznamRezervacij().clear();
 				i += 1;
 			}
 		}
+		System.out.println("Izbrisali ste pocitnice: " + i);
+		System.out.println();
 		
 		if(i == 0) {
 			System.out.println("Pocitnice s to id ne obstajajo");
 		}
 	}
+	
+	/*
+	public String spremeni() throws Exception {
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		
+		int id = 0;
+		while(true) {
+			try {
+				System.out.println("Vnesi id pocitnic, ki jih zelis spremeniti: ");
+				System.out.println();
+				System.out.println("id: ");
+				id = Integer.parseInt(br.readLine().trim());
+				System.out.println();
+				break;
+			}
+			catch (Exception e) {
+				System.out.println("Napacen format vnosa!");
+				System.out.println();
+			}
+		}
+		
+		while(true) {
+			System.out.println("Pritisni (a) za spremebo drzave pocitnic: ");
+			System.out.println("Pritisni (b) za spremembo termina pocitnic: ");
+			System.out.println("Pritisni (c) za spremembo cene pocitnic.");
+			
+			izbira = br.readLine().trim().charAt(0);
+			
+			switch(izbira) {
+				case 'g':
+					Pocitnice p = Pocitnice.ustvariPocitnice();
+					agencija.dodajPocitnice(p);
+					break;
+				case 'g':
+					Pocitnice p = Pocitnice.ustvariPocitnice();
+					agencija.dodajPocitnice(p);
+					break;
+		
+		if(podatki.equals("")) {
+			return "Ni pocitnic s to id!\r\n";
+		}
+		
+		return podatki;
+	}
+	*/
 	
 	public String izpisPoId() throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
@@ -354,12 +409,12 @@ public class TuristicnaAgencija {
 		return podatki;
 	}
 	
-	public String izpisPoTipu(int tip) {
+	public String izpisPoTipu(int tip, boolean admin) {
 		String podatki = "";
 		if(tip == 1) {
 			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
 				if(this.seznamPocitnic.get(i) instanceof Potovanje) {
-					podatki += this.seznamPocitnic.get(i).toString();
+					podatki += this.seznamPocitnic.get(i).toString(admin);
 					podatki += "\r\n";
 				}
 			}
@@ -367,7 +422,7 @@ public class TuristicnaAgencija {
 		else if(tip == 2) {
 			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
 				if(this.seznamPocitnic.get(i) instanceof Kampiranje) {
-					podatki += this.seznamPocitnic.get(i).toString();
+					podatki += this.seznamPocitnic.get(i).toString(admin);
 					podatki += "\r\n";
 				}
 			}
@@ -375,7 +430,7 @@ public class TuristicnaAgencija {
 		else if(tip == 3) {
 			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
 				if(this.seznamPocitnic.get(i) instanceof Krizarjenje) {
-					podatki += this.seznamPocitnic.get(i).toString();
+					podatki += this.seznamPocitnic.get(i).toString(admin);
 					podatki += "\r\n";
 				}
 			}
@@ -383,7 +438,7 @@ public class TuristicnaAgencija {
 		else if(tip == 4) {
 			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
 				if(this.seznamPocitnic.get(i) instanceof Smucanje) {
-					podatki += this.seznamPocitnic.get(i).toString();
+					podatki += this.seznamPocitnic.get(i).toString(admin);
 					podatki += "\r\n";
 				}
 			}
@@ -433,7 +488,7 @@ public class TuristicnaAgencija {
 		return podatki;	
 	}
 	
-	public String izpisDrzava() throws Exception {
+	public String izpisDrzava(boolean admin) throws Exception {
 
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
@@ -447,7 +502,7 @@ public class TuristicnaAgencija {
 		
 		for(Pocitnice p : this.seznamPocitnic) {
 			if(p.getDrzava().equals(drzava)) {
-				podatki += p.toString();
+				podatki += p.toString(admin);
 				podatki += p.zasedenost();
 				podatki += "\r\n";
 			}
@@ -459,7 +514,7 @@ public class TuristicnaAgencija {
 		return podatki;
 	}
 	
-	public String izpisPoCeni() throws Exception {
+	public String izpisPoCeni(boolean admin) throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		
@@ -482,7 +537,7 @@ public class TuristicnaAgencija {
 		
 		for(Pocitnice p : this.seznamPocitnic) {
 			if(p.getCena() == cena) {
-				podatki += p.toString();
+				podatki += p.toString(admin);
 				podatki += p.zasedenost();
 				podatki += "\r\n";
 			}
