@@ -73,7 +73,8 @@ public class Uporabnik {
 	{
 		String zapis = "*U\r\n";			// Zapišemo kodo "G", ki oznacuje gradivo
 		zapis += this.ime + "\r\n";		// Zapišemo avtorja
-		zapis += this.priimek + "\r\n";		// Zapišemo naslov
+		zapis += this.priimek + "\r\n";
+		zapis += this.geslo + "\r\n";	// Zapišemo naslov
 		zapis += "##\r\n";					// Oznacimo konec branja
 		return zapis;
 	}

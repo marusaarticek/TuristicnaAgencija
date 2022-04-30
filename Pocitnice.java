@@ -31,6 +31,10 @@ public class Pocitnice {
 		return this.cena;
 	}
 	
+	public int getId() {
+		return this.id;
+	}
+	
 	public String getDrzava() {
 		return this.drzava;
 	}
@@ -120,17 +124,24 @@ public class Pocitnice {
 		return podatki;
 	}
 	
-	@Override
-	public String toString() {
+	
+	public String toString(boolean admin) {
 		String podatki = "";
 		
 		podatki += "*****   Mozne pocitnice   *****\r\n";
 		podatki += "---------------------------------\r\n";
+		if(admin) {
+			podatki += "Id pocitnic: " + this.id + "\r\n";
+		}
 		podatki += "Drzava: " + this.drzava + "\r\n";
 		podatki += "Cenovni okvir: " + this.cena + "\r\n";
 		
 		for(Termin t : this.seznamTerminov) {
 			podatki += t.toString();
+			podatki += "\r\n";
+		}
+		for(Rezervacija r: this.seznamRezervacij) {
+			podatki += r.toString(admin);
 			podatki += "\r\n";
 		}
 		

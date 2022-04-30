@@ -31,6 +31,31 @@ public class Rezervacija {
 	public int getStOdraslih() {
 		return this.stOdraslih;
 	}
+	
+	public String shraniKotNiz() {
+		String zapis = "*R\r\n";			// Zapišemo kodo "S", ki oznacuje status
+		zapis += this.ime + "\r\n";
+		zapis += this.priimek + "\r\n";
+		zapis += this.stOdraslih + "\r\n";
+		zapis += this.stOtrok+ "\r\n";
+		zapis += "#\r\n";
+		return zapis;
+	}
+	
+	
+    public String toString(boolean admin) {
+		String podatki = "";
+		
+		podatki += "***   Podatki o rezervaciji  ***\r\n";
+		podatki += "Ime: " + this.ime + "\r\n";
+		podatki += "Priimek: " + this.priimek + "\r\n";
+		int st = this.stOdraslih + this.stOtrok;
+		if(admin) {
+			podatki += "Stevilo oseb:  " + st + "\r\n";
+		}
+		return podatki;
+	}
+	
 	/*
 	public static Rezervacija ustvariRezervacijo() throws Exception {
 		

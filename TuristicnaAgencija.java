@@ -83,6 +83,11 @@ public class TuristicnaAgencija {
 		}
 	}
 	
+	public void dodajPocitnice(Pocitnice p) {
+		this.seznamPocitnic.add(p);
+		
+	}
+	
 	
 	/*
 	public void dodajUporabnika(Uporabnik u) {
@@ -280,6 +285,74 @@ public class TuristicnaAgencija {
 	}
 	
 	//-------------------------------------------------------------------
+	public void izbrisId() throws Exception {
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		
+		int id = 0;
+		while(true) {
+			try {
+				System.out.println("Vnesi id pocitnic, ki jih zelis izbrisati: ");
+				System.out.println();
+				System.out.println("id: ");
+				id = Integer.parseInt(br.readLine().trim());
+				System.out.println();
+				break;
+			}
+			catch (Exception e) {
+				System.out.println("Napacen format vnosa!");
+				System.out.println();
+			}
+		}
+		
+		int i = 0;
+		for(Pocitnice p : this.seznamPocitnic) {
+			if(p.getId() == id) {
+				this.seznamPocitnic.remove(p);
+				i += 1;
+			}
+		}
+		
+		if(i == 0) {
+			System.out.println("Pocitnice s to id ne obstajajo");
+		}
+	}
+	
+	public String izpisPoId() throws Exception {
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		
+		int id = 0;
+		while(true) {
+			try {
+				System.out.println("Vnesi id: ");
+				System.out.println();
+				System.out.println("id: ");
+				id = Integer.parseInt(br.readLine().trim());
+				System.out.println();
+				break;
+			}
+			catch (Exception e) {
+				System.out.println("Napacen format vnosa!");
+				System.out.println();
+			}
+		}
+		String podatki = "";
+		
+		for(Pocitnice p : this.seznamPocitnic) {
+			if(p.getId() == id) {
+				podatki += p.toString();
+				podatki += p.zasedenost();
+				podatki += "\r\n";
+			}
+		}
+		
+		if(podatki.equals("")) {
+			return "Ni pocitnic s to id!\r\n";
+		}
+		
+		return podatki;
+	}
 	
 	public String izpisPoTipu(int tip) {
 		String podatki = "";
@@ -318,7 +391,7 @@ public class TuristicnaAgencija {
 		return podatki;
 	}
 	
-	public String izpisPoTerminu() throws Exception {
+	public String izpisPoTerminu(boolean admin) throws Exception {
 		
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
@@ -346,7 +419,7 @@ public class TuristicnaAgencija {
 			for(Termin termin : pocitnice.getSeznamTerminov()) {
 				if(termin.getOdhod().isEqual(odhod) || termin.getOdhod().isAfter(odhod) 
 					&& termin.getPrihod().isEqual(prihod) || termin.getPrihod().isBefore(prihod) ) {
-					podatki += pocitnice.toString();
+					podatki += pocitnice.toString(admin);
 					podatki += pocitnice.zasedenost();
 					podatki += "\r\n";
 				}
