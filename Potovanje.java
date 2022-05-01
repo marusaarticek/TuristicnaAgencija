@@ -57,7 +57,9 @@ public class Potovanje extends Pocitnice {
 	
 	public String shraniKotNiz()
 	{
-		String zapis = "*M\r\n";			
+		String zapis = "*M\r\n";
+		zapis += this.getId()+ "\r\n";		
+		zapis += this.getmaxSteviloOseb() + "\r\n";				
 		zapis += this.getDrzava() + "\r\n";		
 		zapis += this.getCena() + "\r\n";
 		zapis += this.tip + "\r\n";		

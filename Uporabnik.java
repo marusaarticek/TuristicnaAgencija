@@ -77,24 +77,9 @@ public class Uporabnik {
 		String zapis = "*U\r\n";			// Zapišemo kodo "G", ki oznacuje gradivo
 		zapis += this.ime + "\r\n";		// Zapišemo avtorja
 		zapis += this.priimek + "\r\n";
-		zapis += this.geslo + "\r\n";	// Zapišemo naslov
+		zapis += this.geslo + "\r\n";	
+		zapis += this.administrator + "\r\n";// Zapišemo naslov
 		zapis += "##\r\n";					// Oznacimo konec branja
 		return zapis;
-	}
-	
-	/*
-	public String shraniKotNiz()
-	{
-		String zapis = "*U\r\n";			// Zapišemo kodo "G", ki oznacuje gradivo
-		zapis += u.getIme() + "\r\n";		// Zapišemo avtorja
-		zapis += u.getPriimek() + "\r\n";		// Zapišemo naslov
-		zapis += "##\r\n";					// Oznacimo konec branja
-		return zapis;
-	}
-	*/
-	
-	public static void main(String [] args) {
-		Uporabnik u = new Uporabnik();
-		Uporabnik u2 = new Uporabnik("js", "js", "js", false);
 	}
 }

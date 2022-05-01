@@ -37,6 +37,7 @@ public class Kampiranje extends Pocitnice {
 		return this.hisniLjubljencki;
 	}
 	
+	
 	@Override
     public String toString() {
 		String podatki = "";
@@ -58,7 +59,9 @@ public class Kampiranje extends Pocitnice {
 	
 	public String shraniKotNiz()
 	{
-		String zapis = "*C\r\n";			
+		String zapis = "*C\r\n";
+		zapis += this.getId()+ "\r\n";		
+		zapis += this.getmaxSteviloOseb() + "\r\n";				
 		zapis += this.getDrzava() + "\r\n";		
 		zapis += this.getCena() + "\r\n";
 		zapis += this.najemSotora + "\r\n";		
@@ -95,7 +98,7 @@ public class Kampiranje extends Pocitnice {
 			}
 
 			ArrayList<String> terminPodatki;
-			//ArrayList<String> rezervacijaPodatki;
+			
 			for(int i=4; i < zapis.size(); i++)
 			{
 				if(zapis.get(i).trim().equals("*T"))	// Ce vrstica vsebuje *S, imamo zapis o statusu

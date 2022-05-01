@@ -1,19 +1,27 @@
 import java.io.*;
 import java.util.*;
-
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 
 public class UporabnikVmesnik {
 	
 	public static void main(String args[]) throws Exception {
 		
 		TuristicnaAgencija agencija = new TuristicnaAgencija();
-		//agencija.dodajIzDatoteke(Uporabniki.txt);
+		
+		String imeDatU = "Uporabniki.txt";
+		String imeDatP = "Pocitnice.txt";
+		agencija.dodajIzDatotekeU(imeDatU);
+		agencija.dodajIzDatotekeP(imeDatP);
 		
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		
 		char izbira;
-		
+		boolean flag = false;
+		boolean check = false;
 		while(true) {
 			System.out.println("********* Dobrodosli v sistemu. *********\r\n");
 			System.out.println("Pritisni (s) za prijavo v sistem");
@@ -26,7 +34,7 @@ public class UporabnikVmesnik {
 				case 'q':
 					return;
 				case 's':
-					boolean flag = agencija.prijavaUporabnika();
+					flag = agencija.prijavaUporabnika();
 					if(flag) {
 						while(true) {
 							System.out.println("Pritisni (a) za prikaz pocitnic glede na datum.");
@@ -46,33 +54,32 @@ public class UporabnikVmesnik {
 							
 							switch(izbira) {
 								case 'a':
-									System.out.println(agencija.izpisPoTerminu());
+									System.out.println(agencija.izpisPoTerminu(false));
 									break;
 								case 'b':
-									System.out.println(agencija.izpisDrzava());
+									System.out.println(agencija.izpisDrzava(false));
 									break;
 								case 'c':
-									System.out.println(agencija.izpisPoCeni());
+									System.out.println(agencija.izpisPoCeni(false));
 									break;
 								case '1':
-									System.out.println(agencija.izpisPoTipu(1));
+									System.out.println(agencija.izpisPoTipu(1, false));
 									break;
 								case '2':
-									System.out.println(agencija.izpisPoTipu(2));
+									System.out.println(agencija.izpisPoTipu(2, false));
 									break;
 								case '3':
-									System.out.println(agencija.izpisPoTipu(3));
+									System.out.println(agencija.izpisPoTipu(3, false));
 									break;
 								case '4':
-									System.out.println(agencija.izpisPoTipu(4));
+									System.out.println(agencija.izpisPoTipu(4, false));
 									break;
 								case 'f':
 									agencija.novaRezervacija();
 									System.out.println();
 									break;
-								case 'p':
-									break;
-								case 's':
+								case 'e':
+									//-------------------------------
 									break;
 								case 'q':
 									return;
@@ -86,11 +93,11 @@ public class UporabnikVmesnik {
 						break;
 					}
 				case 'r':
-					agencija.registracijaUporabnika();
+					agencija.registracijaUporabnika(false);
 					break;
 				case 'a':
-					boolean flag = agencija.prijavaUporabnika();
-					if(flag) {
+					check = agencija.prijavaUporabnika();
+					if(check) {
 						while(true) {
 							System.out.println("***       ADMIN       ***");
 							System.out.println("Pritisni (a) za prikaz pocitnic glede na datum.");
@@ -119,25 +126,25 @@ public class UporabnikVmesnik {
 							
 							switch(izbira) {
 								case 'a':
-									System.out.println(agencija.izpisPoTerminu(flag));
+									System.out.println(agencija.izpisPoTerminu(check));
 									break;
 								case 'b':
-									System.out.println(agencija.izpisDrzava(flag));
+									System.out.println(agencija.izpisDrzava(check));
 									break;
 								case 'c':
-									System.out.println(agencija.izpisPoCeni(flag));
+									System.out.println(agencija.izpisPoCeni(check));
 									break;
 								case '1':
-									System.out.println(agencija.izpisPoTipu(1));
+									System.out.println(agencija.izpisPoTipu(1, true));
 									break;
 								case '2':
-									System.out.println(agencija.izpisPoTipu(2));
+									System.out.println(agencija.izpisPoTipu(2, true));
 									break;
 								case '3':
-									System.out.println(agencija.izpisPoTipu(3));
+									System.out.println(agencija.izpisPoTipu(3, true));
 									break;
 								case '4':
-									System.out.println(agencija.izpisPoTipu(4));
+									System.out.println(agencija.izpisPoTipu(4, true));
 									break;
 								case 'e':
 									//System.out.println(agencija.izpisPoTipu(flag));
@@ -159,14 +166,14 @@ public class UporabnikVmesnik {
 								case 'i':
 									System.out.println("Vnesite ime datoteke: ");
 									imeDat = br.readLine().trim();
-									agencija.dodajIzDatoteke(imeDat);
+									agencija.shraniVDatoteko(imeDat);
 									System.out.println();
 									break;
 								case 'u':
 									agencija.registracijaUporabnika(flag);
 									break;
 								case 'x':
-									agencija.registracijaUporabnika(flag);
+									agencija.izbrisUporabnika();
 									break;
 								case 'q':
 									return;

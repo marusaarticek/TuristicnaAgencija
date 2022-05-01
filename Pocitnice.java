@@ -1,5 +1,9 @@
 import java.io.*;
 import java.util.*;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 
 public class Pocitnice {
 	
@@ -134,6 +138,7 @@ public class Pocitnice {
 		podatki += "---------------------------------\r\n";
 		if(admin) {
 			podatki += "Id pocitnic: " + this.id + "\r\n";
+			podatki += "Max stevilo oseb: " + this.maxSteviloOseb + "\r\n";
 		}
 		podatki += "Drzava: " + this.drzava + "\r\n";
 		podatki += "Cenovni okvir: " + this.cena + "\r\n";

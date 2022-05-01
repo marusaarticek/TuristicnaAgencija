@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.*;
+import java.time.*;
+import java.time.format.*;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.text.ParseException;
@@ -11,13 +13,15 @@ public class Termin {
 	private LocalDateTime odhod;
 	private LocalDateTime prihod;
 	
+	
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm");
 
 	
 	public Termin() {
 		idTermina = 000;
-		odhod = LocalDateTime.parse("2023-02-01 HH:mm", dtf);
-		prihod = LocalDateTime.parse("2023-02-01 HH:mm", dtf);	
+		odhod = LocalDateTime.parse("2023-02-01 10:00", dtf);
+		prihod = LocalDateTime.parse("2023-02-01 10:00", dtf);
+		
 	}
 	
 	public Termin(LocalDateTime odhod, LocalDateTime prihod, int idTermina) {
@@ -32,11 +36,16 @@ public class Termin {
 	public LocalDate getPrihod() {
 		return this.prihod.toLocalDate();
 	}
-	public void setOdhod(LocalDateTime odhod) {
-		this.odhod = odhod;
+	public void setId(int idTermina) {
+		this.idTermina = idTermina;
 	}
-	public void setPrihod(LocalDateTime prihod) {
-		this.prihod = prihod;
+	public void setOdhod(String odhod) {
+		DateTimeFormatter form = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+		this.odhod = LocalDateTime.parse(odhod, form);
+	}
+	public void setPrihod(String prihod) {
+		DateTimeFormatter form = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+		this.prihod = LocalDateTime.parse(prihod, form);
 	}
 	
 	@Override
@@ -52,7 +61,7 @@ public class Termin {
 	
 	public String shraniKotNiz() {
 		String zapis = "*T\r\n";
-		zapis += this.idTermina + "\r\n";		// Zapišemo kodo "S", ki oznacuje status
+		zapis += this.idTermina + "\r\n";
 		zapis += this.odhod + "\r\n";
 		zapis += this.prihod + "\r\n";
 		zapis += "#\r\n";
@@ -61,14 +70,19 @@ public class Termin {
 	
 	public static Termin preberiIzNiza(ArrayList<String> zapis)
 	{
+		Termin termin = new Termin(); 
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm");
-		Termin termin = new Termin();  // Najprej ustvarimo objekt, kateremu bomo nastavili podane lastnosti
+		String p = "";
+		String r = "";
 		try
-		{
-			termin.setOdhod(LocalDateTime.parse(zapis.get(0), dtf));
-			
-			termin.setPrihod(LocalDateTime.parse(zapis.get(1), dtf));
-			
+		{	
+			termin.setId(Integer.parseInt(zapis.get(0)));
+			p += zapis.get(1);
+			r += zapis.get(2);
+			termin.setOdhod(p);
+			termin.setPrihod(r);
+			// termin.setOdhod(LocalDateTime.parse(zapis.get(1), dtf));
+			// termin.setPrihod(LocalDateTime.parse(zapis.get(2), dtf));
 			return termin;
 		}
 		catch(Exception ex)
@@ -78,11 +92,4 @@ public class Termin {
 			throw ex;
 		}
 	}
-	
-	
-	
-	
-	
-	//------------------------------------------
-	
 }

@@ -76,10 +76,11 @@ public class TuristicnaAgencija {
 				break;
 			}
 		}
-		if(!pogoj) {
+		if(!pogoj && !admin) {
 			Uporabnik u = new Uporabnik(ime, priimek, geslo, false);
 			this.seznamUporabnikov.add(u);
 			System.out.println("Registracija uspesna.");
+		
 		}
 		
 		if(admin) {
@@ -145,12 +146,12 @@ public class TuristicnaAgencija {
 		return flag;
 	}
 	
-	public boolean izbrisUporabnika() throws Exception {
+	public void izbrisUporabnika() throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		
 		System.out.println("***   Brisanje uporabnikov:   ***");
-		System.out.println();
+		System.out.println("Vnesi podatke o uporabniku, ki ga zelis zbrisati:\r\n");
 		System.out.println("Vnesi ime: ");
 		String ime = br.readLine().trim();
 		System.out.println();
@@ -161,7 +162,6 @@ public class TuristicnaAgencija {
 		String geslo = br.readLine().trim();
 		System.out.println();
 		
-		boolean flag = false;
 		int count = 0;
 		
 		for(Uporabnik u : this.seznamUporabnikov) {
@@ -170,17 +170,27 @@ public class TuristicnaAgencija {
 			}
 		}
 		
-		for(Uporabnik u : this.seznamUporabnikov) {
-			if(u.getIme().equals(ime) && u.getPriimek().equals(priimek) && u.getGeslo().equals(geslo)) {
-				System.out.println("Prijava v sistem uspesna.");
-				flag = true;
-				break;
+		firstLoop: for(Uporabnik u : this.seznamUporabnikov) {
+			if(u.getIme().equals(ime) && u.getPriimek().equals(priimek) && u.getGeslo().equals(geslo) && !(u.getAdmin())) {
+				this.seznamUporabnikov.remove(u);
+				System.out.println("Uporabnik izbrisan.");
+				break firstLoop;
+			}
+			else if(u.getIme().equals(ime) && u.getPriimek().equals(priimek) && u.getGeslo().equals(geslo) && u.getAdmin()) {
+				if(count == 1) {
+					System.out.println("Pozor! Admina ne morete zbrisati! ");
+					break firstLoop;
+				}
+				else {
+					this.seznamUporabnikov.remove(u);
+					System.out.println("Admin izbrisan.");
+					break firstLoop;
+				}
 			}
 			else {
 				System.out.println("Uporabnik se ni registriran.");
 			}
 		}
-		return flag;
 	}
 	
 	
@@ -206,6 +216,8 @@ public class TuristicnaAgencija {
 		
 		return podatki;
 	}
+	
+	// ....................DATOTEKE
 	
 	public void shraniVDatotekoP(String imeDatoteke) throws IOException
 	{
@@ -237,9 +249,6 @@ public class TuristicnaAgencija {
 		dat.close();
 	} 
 	
-
-	// Metoda doda uporabnike, shranjene v datoteki, v turisticno agencijo
-	//preberi uporabnike iz datoteke
 	public void dodajIzDatotekeU(String imeDatoteke) throws Exception
 	{
 		FileReader fr = new FileReader(imeDatoteke);
@@ -270,6 +279,8 @@ public class TuristicnaAgencija {
 	{
 		FileReader fr = new FileReader(imeDatoteke);
 		BufferedReader dat = new BufferedReader(fr);
+
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm");
 
 		ArrayList<String> pocitnicePodatki;
 		
@@ -587,7 +598,8 @@ public class TuristicnaAgencija {
 		
 		return podatki;
 	}
-	//-------------------------------------------
+	
+	//------------------------------------------- 
 	
 	public void novaRezervacija() throws Exception {
 		
@@ -675,15 +687,6 @@ public class TuristicnaAgencija {
 				return;
 			}	
 		}
-	}
-	
-	
-	public static void main(String[] args) {
-		TuristicnaAgencija agencija = new TuristicnaAgencija();
-		
-		
-		Pocitnice p2 = new Pocitnice(3, "Slovenija", 100);
-		System.out.println(p2.toString());
 	}
 	
 	
