@@ -145,6 +145,44 @@ public class TuristicnaAgencija {
 		return flag;
 	}
 	
+	public boolean izbrisUporabnika() throws Exception {
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		
+		System.out.println("***   Brisanje uporabnikov:   ***");
+		System.out.println();
+		System.out.println("Vnesi ime: ");
+		String ime = br.readLine().trim();
+		System.out.println();
+		System.out.println("Vnesi priimek: ");
+		String priimek = br.readLine().trim();
+		System.out.println();
+		System.out.println("Vnesi geslo: ");
+		String geslo = br.readLine().trim();
+		System.out.println();
+		
+		boolean flag = false;
+		int count = 0;
+		
+		for(Uporabnik u : this.seznamUporabnikov) {
+			if(u.getAdmin()) {
+				count += 1;
+			}
+		}
+		
+		for(Uporabnik u : this.seznamUporabnikov) {
+			if(u.getIme().equals(ime) && u.getPriimek().equals(priimek) && u.getGeslo().equals(geslo)) {
+				System.out.println("Prijava v sistem uspesna.");
+				flag = true;
+				break;
+			}
+			else {
+				System.out.println("Uporabnik se ni registriran.");
+			}
+		}
+		return flag;
+	}
+	
 	
 	
 	@Override
@@ -179,7 +217,7 @@ public class TuristicnaAgencija {
 		{
 			dat.print(p.shraniKotNiz());
 		}
-		dat.println("***");
+		dat.println("###");
 
 		dat.close();
 	} 

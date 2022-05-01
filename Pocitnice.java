@@ -100,7 +100,9 @@ public class Pocitnice {
 	//-------------------------------------------
 	public String shraniKotNiz()
 	{
-		String zapis = "*P\r\n";			
+		String zapis = "*P\r\n";
+		zapis += this.id+ "\r\n";		
+		zapis += this.maxSteviloOseb + "\r\n";		
 		zapis += this.drzava + "\r\n";		
 		zapis += this.cena + "\r\n";		// Zapišemo naslov
 		

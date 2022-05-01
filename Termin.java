@@ -51,7 +51,8 @@ public class Termin {
 	}
 	
 	public String shraniKotNiz() {
-		String zapis = "*T\r\n";			// Zapišemo kodo "S", ki oznacuje status
+		String zapis = "*T\r\n";
+		zapis += this.idTermina + "\r\n";		// Zapišemo kodo "S", ki oznacuje status
 		zapis += this.odhod + "\r\n";
 		zapis += this.prihod + "\r\n";
 		zapis += "#\r\n";

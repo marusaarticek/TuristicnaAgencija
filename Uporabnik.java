@@ -46,6 +46,9 @@ public class Uporabnik {
 	public String getGeslo() {
 		return this.geslo;
 	}
+	boolean getAdmin() {
+		return this.administrator;
+	}
 	
 	public static Uporabnik preberiIzNiza(ArrayList<String> zapis)
 	{
