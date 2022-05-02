@@ -84,14 +84,16 @@ public class Smucanje extends Pocitnice {
 		Smucanje smucaj = new Smucanje(); 
 		try
 		{
-			smucaj.setDrzava(zapis.get(0));
-			smucaj.setCena(Integer.parseInt(zapis.get(1)));
-			if(zapis.get(2).equals("true")) {
+			smucaj.setId(Integer.parseInt(zapis.get(0)));
+			smucaj.setMaxSt(Integer.parseInt(zapis.get(1)));
+			smucaj.setDrzava(zapis.get(2));
+			smucaj.setCena(Integer.parseInt(zapis.get(3)));
+			if(zapis.get(4).equals("true")) {
 				smucaj.setNajem(true);
 			} else {
 				smucaj.setNajem(false);
 			}
-			if(zapis.get(3).equals("true")) {
+			if(zapis.get(5).equals("true")) {
 				smucaj.setPet(true);
 			} else {
 				smucaj.setPet(false);
@@ -99,7 +101,7 @@ public class Smucanje extends Pocitnice {
 
 			ArrayList<String> terminPodatki;
 			//ArrayList<String> rezervacijaPodatki;
-			for(int i=4; i < zapis.size(); i++)
+			for(int i=6; i < zapis.size(); i++)
 			{
 				if(zapis.get(i).trim().equals("*T"))	// Ce vrstica vsebuje *S, imamo zapis o statusu
 				{
@@ -157,7 +159,7 @@ public class Smucanje extends Pocitnice {
 		while(true) {
 			try {
 				System.out.println("Vnesi max stevilo oseb: ");
-				stevilo = Integer.parseInt(br.readLine().trim());
+				maxSteviloOseb = Integer.parseInt(br.readLine().trim());
 				System.out.println();
 				break;
 			}
@@ -195,19 +197,6 @@ public class Smucanje extends Pocitnice {
 			}
 		}
 		
-		int j = 0;
-		while(true) {
-			try {
-				System.out.println("Vnesi id termina: ");
-				j = Integer.parseInt(br.readLine().trim());
-				System.out.println();
-				break;
-			}
-			catch (Exception e) {
-				System.out.println("Napacen format vnosa!");
-				System.out.println();
-			}
-		}
 		
 		ArrayList<Termin> seznamTerminov = new ArrayList<Termin>();
 		for(int i=0; i < n; i++) {
@@ -218,6 +207,20 @@ public class Smucanje extends Pocitnice {
 			LocalDateTime odhod = LocalDateTime.now();
 			LocalDateTime prihod = LocalDateTime.now();
 			System.out.println("***   VNOS TERMINA   ***\r\n");
+			int j = 0;
+			while(true) {
+				try {
+					System.out.println("Vnesi id termina: ");
+					j = Integer.parseInt(br.readLine().trim());
+					System.out.println();
+					break;
+				}
+				catch (Exception e) {
+					System.out.println("Napacen format vnosa!");
+					System.out.println();
+				}
+			}
+			
 			while(true) {
 				try {
 					System.out.println("Vnesi termin in cas odhoda (npr: 2022-05-31 10:00):  ");

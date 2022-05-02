@@ -23,6 +23,12 @@ public class Rezervacija {
 		this.stOdraslih = stOdraslih;
 		this.stOtrok = stOtrok;	
 	}
+	public String getIme() {
+		return this.ime;
+	}
+	public String getPriimek() {
+		return this.priimek;
+	}
 	
 	public int getStOtrok() {
 		return this.stOdraslih;
@@ -33,7 +39,7 @@ public class Rezervacija {
 	}
 	
 	public String shraniKotNiz() {
-		String zapis = "*R\r\n";			// Zapišemo kodo "S", ki oznacuje status
+		String zapis = "*R\r\n";			
 		zapis += this.ime + "\r\n";
 		zapis += this.priimek + "\r\n";
 		zapis += this.stOdraslih + "\r\n";
@@ -56,65 +62,4 @@ public class Rezervacija {
 		return podatki;
 	}
 	
-	/*
-	public static Rezervacija ustvariRezervacijo() throws Exception {
-		
-		
-		InputStreamReader isr = new InputStreamReader(System.in);
-		BufferedReader br = new BufferedReader(isr);
-		
-		System.out.println("***   Vnos nove Rezervacije   ***");
-		System.out.println();
-		System.out.println("Vnesi ime: ");
-		String avtor = br.readLine().trim();
-		System.out.println();
-		System.out.println("Vnesi priimek: ");
-		String naslov = br.readLine().trim();
-		System.out.println();
-		
-		int stOdraslih = 0;
-		while(true) {
-			try {
-				System.out.println("Vnesi stevilo odraslih: ");
-				stOdraslih = Integer.parseInt(br.readLine().trim());
-				System.out.println();
-				break;
-			} 
-			catch (Exception e) {
-				System.out.println("Napacen format vnosa!");
-				System.out.println();
-			}
-		}
-		
-		int stOtrok = 0;
-		while(true) {
-			try {
-				System.out.println("Vnesi stevilo otrok: ");
-				stOtrok = Integer.parseInt(br.readLine().trim());
-				System.out.println();
-				break;
-			}
-			catch (Exception e) {
-				System.out.println("Napacen format vnosa!");
-				System.out.println();
-			}
-		}
-		
-		System.out.println("Vnesi izbrane pocitnice (Potovanje, Krizarjenje, Kampiranje, Smucanje)");
-		String izbor = br.readLine().trim();
-		System.out.println();
-		
-		
-		
-		
-		
-		int stOseb = stOdraslih + stOtrok;
-		
-		
-		
-		
-		return stOseb;
-		
-	}
-	*/
 }

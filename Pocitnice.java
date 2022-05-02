@@ -14,6 +14,13 @@ public class Pocitnice {
 	private ArrayList<Termin> seznamTerminov;
 	private ArrayList<Rezervacija> seznamRezervacij;
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	public void setMaxSt(int st) {
+		maxSteviloOseb = st;
+	}
+	
 	public void setDrzava(String drzava) {
 		this.drzava = drzava;
 	}
@@ -144,7 +151,7 @@ public class Pocitnice {
 		podatki += "Cenovni okvir: " + this.cena + "\r\n";
 		
 		for(Termin t : this.seznamTerminov) {
-			podatki += t.toString();
+			podatki += t.toString(admin);
 			podatki += "\r\n";
 		}
 		for(Rezervacija r: this.seznamRezervacij) {
@@ -246,7 +253,7 @@ public class Pocitnice {
 		while(true) {
 			try {
 				System.out.println("Vnesi max stevilo oseb: ");
-				stevilo = Integer.parseInt(br.readLine().trim());
+				maxSteviloOseb = Integer.parseInt(br.readLine().trim());
 				System.out.println();
 				break;
 			}

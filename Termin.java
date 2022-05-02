@@ -29,7 +29,9 @@ public class Termin {
 		this.odhod = odhod;
 		this.prihod = prihod;
 	}
-	
+	public int getId() {
+		return this.idTermina;
+	}
 	public LocalDate getOdhod() {
 		return this.odhod.toLocalDate();
 	}
@@ -48,11 +50,14 @@ public class Termin {
 		this.prihod = LocalDateTime.parse(prihod, form);
 	}
 	
-	@Override
-    public String toString() {
+	
+    public String toString(boolean admin) {
 		String podatki = "";
 		
 		podatki += "***   Podatki o terminu   ***\r\n";
+		if(admin) {
+			podatki += "Id: " + this.idTermina + "\r\n";
+		}
 		podatki += "Datum odhoda: " + this.odhod + "\r\n";
 		podatki += "Datum prihoda: " + this.prihod + "\r\n";
 		
