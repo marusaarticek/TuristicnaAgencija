@@ -116,7 +116,7 @@ public class TuristicnaAgencija {
 	}
 	*/
 	
-	public boolean prijavaUporabnika() throws Exception {
+	public boolean prijavaUporabnika(boolean admin) throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		
@@ -133,16 +133,25 @@ public class TuristicnaAgencija {
 		System.out.println();
 		
 		boolean flag = false;
-		for(Uporabnik u : this.seznamUporabnikov) {
+		firstLoop: for(Uporabnik u : this.seznamUporabnikov) {
 			if(u.getIme().equals(ime) && u.getPriimek().equals(priimek) && u.getGeslo().equals(geslo)) {
-				System.out.println("Prijava v sistem uspesna.");
-				flag = true;
-				break;
-			}
-			else {
-				System.out.println("Uporabnik se ni registriran.");
+				if(admin && u.getAdmin()) {
+					System.out.println("Prijava v sistem uspesna.\r\n");
+					flag = true;
+					return flag;
+				}
+				else if(admin && !u.getAdmin()) {
+					System.out.println("Prijavi se lahko samo admin!\r\n");
+					return flag;
+				}
+				else if(!admin && !u.getAdmin()) {
+					System.out.println("Prijava v sistem uspesna.\r\n");
+					flag = true;
+					return flag;
+				}
 			}
 		}
+		System.out.println("Uporabnik se ni registriran.");
 		return flag;
 	}
 	
@@ -174,23 +183,21 @@ public class TuristicnaAgencija {
 			if(u.getIme().equals(ime) && u.getPriimek().equals(priimek) && u.getGeslo().equals(geslo) && !(u.getAdmin())) {
 				this.seznamUporabnikov.remove(u);
 				System.out.println("Uporabnik izbrisan.");
-				break firstLoop;
+				return;
 			}
 			else if(u.getIme().equals(ime) && u.getPriimek().equals(priimek) && u.getGeslo().equals(geslo) && u.getAdmin()) {
 				if(count == 1) {
 					System.out.println("Pozor! Admina ne morete zbrisati! ");
-					break firstLoop;
+					return;
 				}
 				else {
 					this.seznamUporabnikov.remove(u);
 					System.out.println("Admin izbrisan.");
-					break firstLoop;
+					return;
 				}
 			}
-			else {
-				System.out.println("Uporabnik se ni registriran.");
-			}
 		}
+		System.out.println("Uporabnik se ni registriran.");
 	}
 	
 	
@@ -332,7 +339,7 @@ public class TuristicnaAgencija {
 					pocitnicePodatki.add(vrstica);
 				}
 
-				Pocitnice p = Pocitnice.preberiIzNiza(pocitnicePodatki);
+				Potovanje p = Potovanje.preberiIzNiza(pocitnicePodatki);
 				this.seznamPocitnic.add(p);
 			}
 		}
@@ -361,27 +368,31 @@ public class TuristicnaAgencija {
 		}
 		
 		int i = 0;
-		for(Pocitnice p : this.seznamPocitnic) {
-			if(p.getId() == id) {
-				this.seznamPocitnic.remove(p);
-				p.getSeznamRezervacij().clear();
+		Iterator<Pocitnice> itr = this.seznamPocitnic.iterator();            
+		while(itr.hasNext()){
+			Pocitnice p = itr.next();
+			if(p.getId() == id){
+				itr.remove();
+				System.out.println("Izbrisali ste pocitnice.");
 				i += 1;
 			}
 		}
-		System.out.println("Izbrisali ste pocitnice: " + i);
-		System.out.println();
+		
 		
 		if(i == 0) {
 			System.out.println("Pocitnice s to id ne obstajajo");
 		}
 	}
 	
-	/*
-	public String spremeni() throws Exception {
+	
+	public void Spremeni(int izbira) throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		
 		int id = 0;
+		int idtermin = 0;
+		String ojoj = "";
+		String ojoj2 = "";
 		while(true) {
 			try {
 				System.out.println("Vnesi id pocitnic, ki jih zelis spremeniti: ");
@@ -397,32 +408,118 @@ public class TuristicnaAgencija {
 			}
 		}
 		
-		while(true) {
-			System.out.println("Pritisni (a) za spremebo drzave pocitnic: ");
-			System.out.println("Pritisni (b) za spremembo termina pocitnic: ");
-			System.out.println("Pritisni (c) za spremembo cene pocitnic.");
-			
-			izbira = br.readLine().trim().charAt(0);
-			
-			switch(izbira) {
-				case 'g':
-					Pocitnice p = Pocitnice.ustvariPocitnice();
-					agencija.dodajPocitnice(p);
-					break;
-				case 'g':
-					Pocitnice p = Pocitnice.ustvariPocitnice();
-					agencija.dodajPocitnice(p);
-					break;
+		boolean check = false;
 		
-		if(podatki.equals("")) {
-			return "Ni pocitnic s to id!\r\n";
+		for(Pocitnice p : this.seznamPocitnic) {
+			if(p.getId() == id) {
+				check = true;
+				System.out.println(p.toString(true));
+			}
 		}
 		
-		return podatki;
+		if(!check) {
+			System.out.println("Ni pocitnic s to id!\r\n");
+			return;
+		}
+		
+		if(izbira ==  2) {
+			int cena = 0;
+			while(true) {
+				try {
+					System.out.println("Vnesi nov cenovni okvir: ");
+					System.out.println();
+					System.out.println("Cena: ");
+					cena = Integer.parseInt(br.readLine().trim());
+					System.out.println();
+					break;
+				}
+				catch (Exception e) {
+					System.out.println("Napacen format vnosa!");
+					System.out.println();
+				}
+			}
+			
+			for(Pocitnice p : this.seznamPocitnic) {
+				if(p.getId() == id) {
+					p.setCena(cena);
+					System.out.println("Uspesno spremenjena cena: ");
+					return;
+				}
+			}
+		}else if(izbira == 1) {
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm");
+			String preberiOdhod = "";
+			String preberiPrihod = "";
+			LocalDateTime odhod = LocalDateTime.now();
+			LocalDateTime prihod = LocalDateTime.now();
+			System.out.println("***   VNOS TERMINA   ***\r\n");
+			
+			while(true) {
+				try {
+					System.out.println("Vnesi id termina, ki ga zelis spremeniti: ");
+					System.out.println();
+					System.out.println("id: ");
+					idtermin = Integer.parseInt(br.readLine().trim());
+					System.out.println();
+					break;
+				}
+				catch (Exception e) {
+					System.out.println("Napacen format vnosa!");
+					System.out.println();
+				}
+			}
+			for(Pocitnice p : this.seznamPocitnic) {
+				if(p.getId() == id) {
+					for(Termin t : p.getSeznamTerminov()) {
+						if(t.getId() == idtermin) {
+							while(true) {
+								try {
+									System.out.println("Vnesi nov termin in cas odhoda (npr: 2022-05-31 10:00):  ");
+									preberiOdhod = br.readLine().trim();
+									odhod = LocalDateTime.parse(preberiOdhod, dtf);
+									break;
+									
+								}
+								catch (Exception e) { 
+									System.out.println("Napacen format vnosa!");
+									System.out.println("Poskusite ponovno:");
+								}
+							}
+							while(true) {
+								try {
+									System.out.println();
+									System.out.println("Vnesi nov termin in cas prihoda (npr: 2022-06-05 10:00):  ");
+									preberiPrihod = br.readLine().trim();
+									prihod = LocalDateTime.parse(preberiPrihod, dtf);
+									break;
+									
+								}
+								catch (Exception e) { 
+									System.out.println("Napacen format vnosa!");
+									System.out.println("Poskusite ponovno:");
+									System.out.println();
+								}
+							}
+							
+							// Ko pretvarjas LocalDateTime v string mors uporabit datetimeformater 
+							// da si ne zakompliciras stvari...
+							ojoj += prihod;
+							ojoj2 += odhod;
+							t.setOdhod(ojoj2);
+							t.setPrihod(ojoj);
+							System.out.println("Uspesno spremenjen termin: ");
+							return;
+						}else {
+							System.out.println("Ni tega termina");
+						}
+					}
+				}
+			}
+		}
 	}
-	*/
 	
-	public String izpisPoId() throws Exception {
+	
+	public String izpisPoId(boolean admin) throws Exception {
 		InputStreamReader isr = new InputStreamReader(System.in);
 		BufferedReader br = new BufferedReader(isr);
 		
@@ -445,7 +542,7 @@ public class TuristicnaAgencija {
 		
 		for(Pocitnice p : this.seznamPocitnic) {
 			if(p.getId() == id) {
-				podatki += p.toString();
+				podatki += p.toString(admin);
 				podatki += p.zasedenost();
 				podatki += "\r\n";
 			}
@@ -521,12 +618,19 @@ public class TuristicnaAgencija {
 		
 		for(Pocitnice pocitnice : this.seznamPocitnic) {
 			for(Termin termin : pocitnice.getSeznamTerminov()) {
-				if(termin.getOdhod().isEqual(odhod) || termin.getOdhod().isAfter(odhod) 
-					&& termin.getPrihod().isEqual(prihod) || termin.getPrihod().isBefore(prihod) ) {
+				if(termin.getOdhod().isEqual(odhod) && termin.getPrihod().isEqual(prihod)) {
+					podatki += pocitnice.toStringPocitnice();
+					podatki += termin.toString(admin);
+					podatki += pocitnice.zasedenost();
+					podatki += "\r\n";
+				}
+				/*if(termin.getOdhod().isEqual(odhod) || (termin.getOdhod().isAfter(odhod) && termin.getOdhod().isBefore(prihod))
+					&& termin.getPrihod().isEqual(prihod) || (termin.getPrihod().isBefore(prihod) && termin.getOdhod().isBefore(prihod) ) ) {
 					podatki += pocitnice.toString(admin);
 					podatki += pocitnice.zasedenost();
 					podatki += "\r\n";
 				}
+				*/
 			}	
 		}
 		
@@ -601,6 +705,33 @@ public class TuristicnaAgencija {
 	
 	//------------------------------------------- 
 	
+	public String izpisRezervacij(boolean admin) throws Exception {
+		
+		InputStreamReader isr = new InputStreamReader(System.in);
+		BufferedReader br = new BufferedReader(isr);
+		
+		System.out.println("***   izpis rezervacij:   ***");
+		System.out.println();
+		System.out.println("Vnesi ime: ");
+		String ime = br.readLine().trim();
+		System.out.println();
+		System.out.println("Vnesi priimek: ");
+		String priimek = br.readLine().trim();
+		System.out.println();
+		
+		String podatki = "";
+		for(Pocitnice p: this.seznamPocitnic) {
+			for(Rezervacija r : p.getSeznamRezervacij()) {
+				if(r.getIme().equals(ime) && r.getPriimek().equals(priimek)) {
+					podatki += p.toStringPocitnice();
+					podatki += r.toString(admin);
+					podatki += "\r\n";
+				}
+			}
+		}
+		return podatki;
+	}
+	
 	public void novaRezervacija() throws Exception {
 		
 		InputStreamReader isr = new InputStreamReader(System.in);
@@ -614,6 +745,14 @@ public class TuristicnaAgencija {
 		System.out.println("Vnesi priimek: ");
 		String priimek = br.readLine().trim();
 		System.out.println();
+		
+		
+		System.out.println("Vnesi drzavo pocitnic");
+		System.out.println();
+		System.out.println("Drzava: ");
+		String drzava = br.readLine().trim();
+		
+		String podatki = "";
 		
 		int stOdraslih = 0;
 		while(true) {
@@ -646,46 +785,63 @@ public class TuristicnaAgencija {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
 		String preberiOdhod = "";
 		String preberiPrihod = "";
-		
+		LocalDate odhod;
+		LocalDate prihod;
 		// za vsak tip pocitnic so na voljo termini
 		// za vsak termin je na voljo maxstoseb - prostih mest
 		
-		System.out.println("***   Rezervacija pocitnic - TERMIN   ***");
-		System.out.println();
-		System.out.println("Termin odhoda (npr: 2023-02-01):  ");
-		preberiOdhod = br.readLine().trim();
-		LocalDate odhod = LocalDate.parse(preberiOdhod, dtf);
-		
-		System.out.println();
-		System.out.println("Termin prihoda (npr: 2023-02-05):  ");
-		preberiPrihod = br.readLine().trim();
-		LocalDate prihod = LocalDate.parse(preberiPrihod, dtf);
+		while(true) {
+			try {
+				System.out.println("Vnesi termin (npr: 2022-05-31):  ");
+				preberiOdhod = br.readLine().trim();
+				odhod = LocalDate.parse(preberiOdhod, dtf);
+				break;
+				
+			}
+			catch (Exception e) { 
+				System.out.println("Napacen format vnosa!");
+				System.out.println("Poskusite ponovno:");
+			}
+		}
+		while(true) {
+			try {
+				System.out.println("Vnesi termin prihoda (npr: 2022-06-05):  ");
+				preberiPrihod = br.readLine().trim();
+				prihod = LocalDate.parse(preberiPrihod, dtf);
+				break;
+				
+			}
+			catch (Exception e) { 
+				System.out.println("Napacen format vnosa!");
+				System.out.println("Poskusite ponovno:");
+				System.out.println();
+			}
+		}
 		
 		int stevilo = 0;
 		for(Pocitnice pocitnice : this.seznamPocitnic) {
-			for(Termin termin : pocitnice.getSeznamTerminov()) {
-				if(termin.getOdhod().isEqual(odhod) || termin.getOdhod().isAfter(odhod) && termin.getPrihod().isEqual(prihod) || termin.getPrihod().isBefore(prihod) ) {
-					System.out.println("uspesen termin");
-					break;
+			if(pocitnice.getDrzava().equals(drzava)) {
+				for(Termin termin : pocitnice.getSeznamTerminov()) {
+					if(termin.getOdhod().isEqual(odhod) && termin.getPrihod().isEqual(prihod) ) {
+						for(Rezervacija r : pocitnice.getSeznamRezervacij()) {
+							stevilo += r.getStOdraslih() + r.getStOtrok();
+						}
+						if(stevilo + turisti <= pocitnice.getmaxSteviloOseb()) {
+							System.out.println("Rezervacija uspesna.");
+							Rezervacija r = new Rezervacija(ime, priimek, stOdraslih, stOtrok);
+							pocitnice.dodajRezervacijo(r);
+							return;
+						}
+						else if(stevilo + turisti >= pocitnice.getmaxSteviloOseb()) {
+							System.out.println("Rezervacija NI mogoca.");
+							return;
+						}	
+					}else {
+						System.out.println("Za ta termin ni mozne rezervacije");
+						return;
+					}
 				}
-				else{
-					System.out.println("neuspesen termin");
-					break;
-				}
 			}
-			for(Rezervacija r : pocitnice.getSeznamRezervacij()) {
-				stevilo += r.getStOdraslih() + r.getStOtrok();
-			}
-			if(stevilo + turisti <= pocitnice.getmaxSteviloOseb()) {
-				System.out.println("Rezervacija uspesna.");
-				Rezervacija r = new Rezervacija(ime, priimek, stOdraslih, stOtrok);
-				pocitnice.dodajRezervacijo(r);
-				break;
-			}
-			else {
-				System.out.println("Rezervacija NE uspesna.");
-				return;
-			}	
 		}
 	}
 	

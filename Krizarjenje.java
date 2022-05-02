@@ -90,14 +90,16 @@ public class Krizarjenje extends Pocitnice {
 		Krizarjenje k = new Krizarjenje(); 
 		try
 		{
-			k.setDrzava(zapis.get(0));
-			k.setCena(Integer.parseInt(zapis.get(1)));
-			k.setTip(zapis.get(2));
-			k.setKrizarke(zapis.get(3));
+			k.setId(Integer.parseInt(zapis.get(0)));
+			k.setMaxSt(Integer.parseInt(zapis.get(1)));
+			k.setDrzava(zapis.get(2));
+			k.setCena(Integer.parseInt(zapis.get(3)));
+			k.setTip(zapis.get(4));
+			k.setKrizarke(zapis.get(5));
 			
 			ArrayList<String> terminPodatki;
 			//ArrayList<String> rezervacijaPodatki;
-			for(int i=4; i < zapis.size(); i++)
+			for(int i=6; i < zapis.size(); i++)
 			{
 				if(zapis.get(i).trim().equals("*T"))	// Ce vrstica vsebuje *S, imamo zapis o statusu
 				{
@@ -153,7 +155,7 @@ public class Krizarjenje extends Pocitnice {
 		while(true) {
 			try {
 				System.out.println("Vnesi max stevilo oseb: ");
-				stevilo = Integer.parseInt(br.readLine().trim());
+				maxSteviloOseb = Integer.parseInt(br.readLine().trim());
 				System.out.println();
 				break;
 			}
@@ -176,19 +178,7 @@ public class Krizarjenje extends Pocitnice {
 				System.out.println();
 			}
 		}
-		int j = 0;
-		while(true) {
-			try {
-				System.out.println("Vnesi id termina: ");
-				j = Integer.parseInt(br.readLine().trim());
-				System.out.println();
-				break;
-			}
-			catch (Exception e) {
-				System.out.println("Napacen format vnosa!");
-				System.out.println();
-			}
-		}
+		
 		int n = 0;
 		while(true) {
 			try {
@@ -212,6 +202,21 @@ public class Krizarjenje extends Pocitnice {
 			LocalDateTime odhod = LocalDateTime.now();
 			LocalDateTime prihod = LocalDateTime.now();
 			System.out.println("***   VNOS TERMINA   ***\r\n");
+			
+			int j = 0;
+			while(true) {
+				try {
+					System.out.println("Vnesi id termina: ");
+					j = Integer.parseInt(br.readLine().trim());
+					System.out.println();
+					break;
+				}
+				catch (Exception e) {
+					System.out.println("Napacen format vnosa!");
+					System.out.println();
+				}
+			}
+			
 			while(true) {
 				try {
 					System.out.println("Vnesi termin in cas odhoda (npr: 2022-05-31 10:00):  ");
