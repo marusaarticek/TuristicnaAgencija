@@ -758,7 +758,7 @@ public class TuristicnaAgencija {
 		while(true) {
 			try {
 				System.out.println("Vnesi stevilo odraslih: ");
-				stOdraslih = Integer.parseInt(br.readLine().trim());
+				stOdraslih += Integer.parseInt(br.readLine().trim());
 				System.out.println();
 				break;
 			} 
@@ -771,7 +771,7 @@ public class TuristicnaAgencija {
 		while(true) {
 			try {
 				System.out.println("Vnesi stevilo otrok: ");
-				stOtrok = Integer.parseInt(br.readLine().trim());
+				stOtrok += Integer.parseInt(br.readLine().trim());
 				System.out.println();
 				break;
 			}
@@ -781,8 +781,25 @@ public class TuristicnaAgencija {
 			}
 		}
 		int turisti = stOdraslih+stOtrok;
+		/*
+		for(int i = 0; i < this.seznamPocitnic.size(); i++) {
+			if(this.seznamPocitnic.get(i) instanceof tip && this.seznamPocitnic.get(i).getDrzava().equals(drzava)) {
+				if(stevilo + turisti <= this.seznamPocitnic.get(i).getmaxSteviloOseb()) {
+					System.out.println("Rezervacija uspesna.");
+					Rezervacija r = new Rezervacija(ime, priimek, stOdraslih, stOtrok);
+					this.seznamPocitnic.get(i).dodajRezervacijo(r);
+					return;
+				}
+				else if(stevilo + turisti >= this.seznamPocitnic.get(i).getmaxSteviloOseb()) {
+					System.out.println("Rezervacija NI mogoca.");
+					return;
+				}
+			}
+		}
+		*/
 		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+		
+		//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd");
 		String preberiOdhod = "";
 		String preberiPrihod = "";
 		LocalDate odhod;
@@ -794,7 +811,7 @@ public class TuristicnaAgencija {
 			try {
 				System.out.println("Vnesi termin (npr: 2022-05-31):  ");
 				preberiOdhod = br.readLine().trim();
-				odhod = LocalDate.parse(preberiOdhod, dtf);
+				odhod = LocalDate.parse(preberiOdhod);
 				break;
 				
 			}
@@ -807,7 +824,7 @@ public class TuristicnaAgencija {
 			try {
 				System.out.println("Vnesi termin prihoda (npr: 2022-06-05):  ");
 				preberiPrihod = br.readLine().trim();
-				prihod = LocalDate.parse(preberiPrihod, dtf);
+				prihod = LocalDate.parse(preberiPrihod);
 				break;
 				
 			}
@@ -818,14 +835,19 @@ public class TuristicnaAgencija {
 			}
 		}
 		
+		
 		int stevilo = 0;
+		
 		for(Pocitnice pocitnice : this.seznamPocitnic) {
 			if(pocitnice.getDrzava().equals(drzava)) {
+				for(Rezervacija r : pocitnice.getSeznamRezervacij()) {
+					stevilo += r.getStOdraslih() + r.getStOtrok();
+				}
 				for(Termin termin : pocitnice.getSeznamTerminov()) {
-					if(termin.getOdhod().isEqual(odhod) && termin.getPrihod().isEqual(prihod) ) {
-						for(Rezervacija r : pocitnice.getSeznamRezervacij()) {
-							stevilo += r.getStOdraslih() + r.getStOtrok();
-						}
+					LocalDate t1 = termin.getOdhod();
+					LocalDate t2 = termin.getPrihod();
+					if(t1.isEqual(odhod) && t2.isEqual(prihod) ) {
+						System.out.println("termin gucci.");
 						if(stevilo + turisti <= pocitnice.getmaxSteviloOseb()) {
 							System.out.println("Rezervacija uspesna.");
 							Rezervacija r = new Rezervacija(ime, priimek, stOdraslih, stOtrok);
@@ -836,13 +858,19 @@ public class TuristicnaAgencija {
 							System.out.println("Rezervacija NI mogoca.");
 							return;
 						}	
-					}else {
+					}
+					else if(!t1.isEqual(odhod) && !t2.isEqual(prihod) ) {
+						System.out.println("termin not ok.");
+					}
+					else {
 						System.out.println("Za ta termin ni mozne rezervacije");
 						return;
 					}
+					
 				}
 			}
 		}
+		
 	}
 	
 	
