@@ -243,8 +243,8 @@ public class TuristicnaAgencija {
 	
 	public void shraniVDatoteko(String imeDatoteke) throws IOException
 	{
-		//FileWriter fw = new FileWriter(imeDatoteke, true); // Drugi parameter doloèa, da se že obstojeèi datoteki zapis doda
-		FileWriter fw = new FileWriter(imeDatoteke, false); //datoteki se spremeni zapis v celoti
+		
+		FileWriter fw = new FileWriter(imeDatoteke, false); 
 		PrintWriter dat = new PrintWriter(fw);
 
 		for(Uporabnik u : this.seznamUporabnikov)
@@ -252,6 +252,12 @@ public class TuristicnaAgencija {
 			dat.print(u.shraniKotNiz());
 		}
 		dat.println("***");
+		
+		for(Pocitnice p : this.seznamPocitnic)
+		{
+			dat.print(p.shraniKotNiz());
+		}
+		dat.println("###");
 
 		dat.close();
 	} 
@@ -572,7 +578,7 @@ public class TuristicnaAgencija {
 					podatki += "\r\n";
 				}
 			}
-		}
+		} 
 		else if(tip == 3) {
 			for(int i = 0; i < this.seznamPocitnic.size(); i++) {
 				if(this.seznamPocitnic.get(i) instanceof Krizarjenje) {
@@ -588,7 +594,7 @@ public class TuristicnaAgencija {
 					podatki += "\r\n";
 				}
 			}
-		}
+		} 
 		return podatki;
 	}
 	

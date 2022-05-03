@@ -141,6 +141,7 @@ public class Pocitnice {
 	public String toString(boolean admin) {
 		String podatki = "";
 		
+	
 		podatki += "*****   Mozne pocitnice   *****\r\n";
 		podatki += "---------------------------------\r\n";
 		if(admin) {
@@ -149,6 +150,7 @@ public class Pocitnice {
 		}
 		podatki += "Drzava: " + this.drzava + "\r\n";
 		podatki += "Cenovni okvir: " + this.cena + "\r\n";
+		
 		
 		for(Termin t : this.seznamTerminov) {
 			podatki += t.toString(admin);

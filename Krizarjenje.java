@@ -46,20 +46,21 @@ public class Krizarjenje extends Pocitnice {
 	}
 	
 	@Override
-    public String toString() {
+    public String toString(boolean admin) {
 		String podatki = "";
 		
 		podatki += "*****   Podatki o krizarjenju   *****\r\n";
 		podatki += "--------------------------------\r\n";
-		podatki += super.toStringPocitnice();
+		podatki += super.toString(admin);
 		podatki += "Tip potovanja: " + this.tip + "\r\n";
 		podatki += "Krizarka: " + this.krizarke + "\r\n";
 		podatki += "\r\n";
-		
+		/*
 		for(Termin t : this.getSeznamTerminov()) {
 			podatki += t.toString();
 			podatki += "\r\n";
 		}
+		*/
 		return podatki;
 	}
 	

@@ -39,20 +39,21 @@ public class Smucanje extends Pocitnice {
 	}
 	
 	@Override
-    public String toString() {
+    public String toString(boolean admin) {
 		String podatki = "";
 		
 		podatki += "*****   Podatki o smucanju   *****\r\n";
 		podatki += "--------------------------------\r\n";
-		podatki += super.toStringPocitnice();
+		podatki += super.toString(admin);
 		podatki += "Najem hotela: " + this.najemHotela + "\r\n";
 		podatki += "Hisni ljubljencki: " + this.hisniLjubljencki + "\r\n";
 		podatki += "\r\n";
-		
+		/*
 		for(Termin t : this.getSeznamTerminov()) {
 			podatki += t.toString();
 			podatki += "\r\n";
 		}
+		*/
 		return podatki;
 	}
 	
@@ -103,12 +104,11 @@ public class Smucanje extends Pocitnice {
 			//ArrayList<String> rezervacijaPodatki;
 			for(int i=6; i < zapis.size(); i++)
 			{
-				if(zapis.get(i).trim().equals("*T"))	// Ce vrstica vsebuje *S, imamo zapis o statusu
+				if(zapis.get(i).trim().equals("*T"))	
 				{
-					terminPodatki = new ArrayList<String>();	// Pripravimo nov seznam, v katerega bomo dodajali podatke o trenutnem statusu
+					terminPodatki = new ArrayList<String>();	
 					i++;
-					while(!zapis.get(i).trim().equals("#"))	// Dokler se zapis o statusu ne konca (dokler se ne pojavi #), dodajamo podatke v seznam
-					{
+					while(!zapis.get(i).trim().equals("#"))	{
 						terminPodatki.add(zapis.get(i));
 						i++;
 					}
