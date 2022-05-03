@@ -101,7 +101,7 @@ public class UporabnikVmesnik {
 				case 'a':
 					check = agencija.prijavaUporabnika(true);
 					if(check) {
-						while(true) {
+						adminloop: while(true) {
 							System.out.println("***   ***");
 							System.out.println("Pritisni (a) za prikaz pocitnic glede na datum.");
 							System.out.println("Pritisni (b) iskanje pocitnic glede na drzavo");
@@ -121,6 +121,7 @@ public class UporabnikVmesnik {
 							System.out.println("Pritisni (i) za shranjevanje v datoteko.");
 							System.out.println("Pritisni (k) za dodajanje novega administratorja.");
 							System.out.println("Pritisni (x) za brisanje uporabnikov/administratorjev.");
+							System.out.println("Pritisni (z) za vrnitev na zacetno stran.");
 							
 							System.out.println();
 							
@@ -200,6 +201,8 @@ public class UporabnikVmesnik {
 								case 'x':
 									agencija.izbrisUporabnika();
 									break;
+								case 'z':
+									break adminloop;
 								case 'q':
 									return;
 								default:

@@ -277,7 +277,79 @@ public class Pocitnice {
 			}
 		}
 		
-		Pocitnice p = new Pocitnice(id, maxSteviloOseb, drzava, cena);
+		
+		int n = 0;
+		while(true) {
+			try {
+				System.out.println("Vnesi stevilo moznih terminov: ");
+				n = Integer.parseInt(br.readLine().trim());
+				System.out.println();
+				break;
+			}
+			catch (Exception e) {
+				System.out.println("Napacen format vnosa!");
+				System.out.println();
+			}
+		}
+		
+		ArrayList<Termin> seznamTerminov = new ArrayList<Termin>();
+		for(int i=0; i < n; i++) {
+			
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm");
+			String preberiOdhod = "";
+			String preberiPrihod = "";
+			LocalDateTime odhod = LocalDateTime.now();
+			LocalDateTime prihod = LocalDateTime.now();
+			System.out.println("***   VNOS TERMINA   ***\r\n");
+			int j = 0;
+			while(true) {
+				try {
+					System.out.println("Vnesi id termina: ");
+					j = Integer.parseInt(br.readLine().trim());
+					System.out.println();
+					break;
+				}
+				catch (Exception e) {
+					System.out.println("Napacen format vnosa!");
+					System.out.println();
+				}
+			}
+			
+			while(true) {
+				try {
+					System.out.println("Vnesi termin in cas odhoda (npr: 2022-05-31 10:00):  ");
+					preberiOdhod = br.readLine().trim();
+					odhod = LocalDateTime.parse(preberiOdhod, dtf);
+					break;
+					
+				}
+				catch (Exception e) { 
+					System.out.println("Napacen format vnosa!");
+					System.out.println("Poskusite ponovno:");
+				}
+			}
+			while(true) {
+				try {
+					System.out.println();
+					System.out.println("Vnesi termin in cas prihoda (npr: 2022-06-05 10:00):  ");
+					preberiPrihod = br.readLine().trim();
+					prihod = LocalDateTime.parse(preberiPrihod, dtf);
+					break;
+					
+				}
+				catch (Exception e) { 
+					System.out.println("Napacen format vnosa!");
+					System.out.println("Poskusite ponovno:");
+					System.out.println();
+				}
+			}
+			System.out.println("Vnos termina koncan. ");
+			Termin t = new Termin(odhod, prihod, j);
+			seznamTerminov.add(t);
+		}
+		
+		
+		Pocitnice p = new Pocitnice(id, maxSteviloOseb, drzava, cena, seznamTerminov);
 		return p;	
 	}
 	

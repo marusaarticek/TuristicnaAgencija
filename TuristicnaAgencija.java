@@ -860,7 +860,7 @@ public class TuristicnaAgencija {
 						}	
 					}
 					else if(!t1.isEqual(odhod) && !t2.isEqual(prihod) ) {
-						System.out.println("termin not ok.");
+						break;
 					}
 					else {
 						System.out.println("Za ta termin ni mozne rezervacije");
